@@ -1,0 +1,25 @@
+{
+  "name": "catalyst",
+  "version": "1.0.0",
+  "description": "A lightweight React state management",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rm -Rf dist && babel src -d dist"
+  },
+  "repository": "https://github.com/shipt/catalyst.git",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/preset-react": "^7.10.1",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.2.0",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-native": "^3.8.1",
+    "react": "^16.13.1"
+  }
+}
