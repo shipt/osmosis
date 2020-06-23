@@ -4,7 +4,7 @@ import { useContainer } from './setup';
 export const useOsmosis = (useStoreContainer) => {
     const storeContainerRef = useRef();
 
-    let [StoreContext, withStore] = useContainer(useStoreContainer, storeContainerRef);
+    const [StoreContext, withStore] = useContainer(useStoreContainer, storeContainerRef);
 
     return {
         StoreContext,
