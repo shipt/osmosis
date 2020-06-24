@@ -1,11 +1,19 @@
 import React, { createContext } from 'react';
 
+class Container {
+  constructor() {
+    this.container = {
+      state: {}
+    };
+  }
+}
+
 const useContainer = (useHook, store) => {
   const StoreContext = createContext();
 
   const withStoreContext = WrappedComponent => props => {
     let container = useHook();
-    store.current = container;
+    store.container = container;
     return (
       <StoreContext.Provider value={[container]}>
         <WrappedComponent {...props} />
@@ -16,4 +24,4 @@ const useContainer = (useHook, store) => {
   return [StoreContext, withStoreContext];
 };
 
-export { useContainer };
+export { Container, useContainer };
