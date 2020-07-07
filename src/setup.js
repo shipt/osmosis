@@ -14,12 +14,12 @@ const useContainer = (useHook, classContainer) => {
 
   const withStoreContext = WrappedComponent => props => {
     let container = useHook();
-    if(classContainer) {
+    if (classContainer) {
       classContainer.container = container;
-    }else {
+    } else {
       for (let key in container) {
         store[key] = container[key];
-      };
+      }
     }
 
     return (
