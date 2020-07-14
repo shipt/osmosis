@@ -8,12 +8,20 @@ class Container {
   }
 }
 
-const useContainer = (useHook, store) => {
+const useContainer = (useHook, classContainer) => {
   const StoreContext = createContext();
+  let store = { state: {} };
 
   const withStoreContext = WrappedComponent => props => {
     let container = useHook();
-    store.container = container;
+    if (classContainer) {
+      classContainer.container = container;
+    } else {
+      for (let key in container) {
+        store[key] = container[key];
+      }
+    }
+
     return (
       <StoreContext.Provider value={[container]}>
         <WrappedComponent {...props} />
@@ -21,7 +29,7 @@ const useContainer = (useHook, store) => {
     );
   };
 
-  return [StoreContext, withStoreContext];
+  return [StoreContext, withStoreContext, store];
 };
 
 export { Container, useContainer };
