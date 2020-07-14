@@ -2,12 +2,7 @@
 
 react-osmosis is the spontaneous net movement of state objects through a selectively permeable context into a region of higher solute concentration, in the direction that tends to equalize the state concentrations on the two sides.
 
-Osmosis uses React context and hooks to make an easily accessible and managable state for any React or React Native project
-
-# Maintainers
-
-`@mobile-shopper-devs` Slack Group
-`#eng-shopper-app` Slack Channel
+Osmosis uses React context and hooks to make an easily accessible and manageable state for any React or React Native project.
 
 # Overview
 
@@ -37,17 +32,18 @@ To connect the state throughout your app you have to import the `StoreProvider` 
 import { StoreProvider } from 'osmosis';
 ```
 
-`StoreProvider` takes two arguments, the first is an array of the wrapper functions returned from `useContainer` and the second is root component for your app. It then returns the root component fully wrapped with in your state container context.
+`StoreProvider` takes two arguments, the first is an array of the wrapper functions returned from `useContainer` and the second is the root component for your app. It then returns the root component fully wrapped with in your state container context.
 
-> **Note:** if one of your context containers uses the state from another context container then it's wrapper function must have a higher index in the array than the wrapper function of the container it uses.
+In the wrapper function array order matters, so the more important state containers should be defined first.
 
 ```js
-let WrappedRoot = StoreProvider([wrapperFunction1, WrapperFunction2], RootComponent);
+let WrappedRoot = StoreProvider([wrapperFunction1, wrapperFunction2], RootComponent);
 ```
 
 ## Example
 
 ```js
+//counter.store.js
 import React, { useState } from 'react';
 
 const counterContainer = () => {
@@ -75,4 +71,32 @@ let [CounterContext, wrapCounter, CounterRef] = useContainer(stateContainer);
 export { CounterContext, wrapCounter };
 
 export default CounterRef;
+```
+
+```jsx
+//counter.js
+import React, { useContext } from 'raect';
+import { CounterContext } from './counter.store';
+
+export default () => {
+  let counterContext = useContext(CounterContext);
+  let { count } = counterContext.state;
+
+  return (
+    <div>
+      <p>{count}</p>
+      <button onClick={counterContext.increment}>+</button>
+      <button onClick={counterContext.decrement}>-</button>
+    </div>
+  );
+};
+```
+
+```jsx
+//index.js Root Component
+import { StoreProvider } from 'osmosis';
+import { wrapCounter } from './counter.store';
+import Counter from './counter';
+
+export default StoreProvider([wrapCounter], Counter);
 ```
