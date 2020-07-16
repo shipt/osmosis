@@ -8,7 +8,7 @@ class Container {
   }
 }
 
-const useContainer = (useHook, classContainer) => {
+const setupStore = (useHook, classContainer) => {
   const StoreContext = createContext();
   let store = { state: {} };
 
@@ -32,4 +32,4 @@ const useContainer = (useHook, classContainer) => {
   return [StoreContext, withStoreContext, store];
 };
 
-export { Container, useContainer };
+export { Container, setupStore };
