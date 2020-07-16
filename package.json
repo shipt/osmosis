@@ -1,6 +1,6 @@
 {
   "name": "osmosis",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A lightweight React state management",
   "main": "src/index.js",
   "repository": "https://github.com/shipt/osmosis.git",
