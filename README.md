@@ -25,7 +25,7 @@ the `setupStore` function takes in an argument that is just a custom hook. The c
 `setupStore` returns three variables
 
 ```js
-let [containerContext, wrapperFunction, containerRef] = setupStore(stateContainer);
+let [containerContext, wrapperFunction, containerRef] = setupStore(useStateContainer);
 ```
 
 - `containerContext` is a context variable that gives you access to your state and functions
@@ -53,7 +53,7 @@ let WrappedRoot = StoreProvider([wrapperFunction1, wrapperFunction2], RootCompon
 import React, { useState } from 'react';
 import { setupStore } from 'osmosis';
 
-const counterContainer = () => {
+const useCounterContainer = () => {
   const [count, setCount] = useState(0);
 
   const increment = () => {
@@ -73,11 +73,11 @@ const counterContainer = () => {
   };
 };
 
-let [CounterContext, wrapCounter, CounterRef] = setupStore(stateContainer);
+let [CounterContext, wrapCounter, counterRef] = setupStore(useCounterContainer);
 
 export { CounterContext, wrapCounter };
 
-export default CounterRef;
+export default counterRef;
 ```
 
 ```jsx
