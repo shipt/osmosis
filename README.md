@@ -14,18 +14,18 @@ yarn add osmosis
 
 ## Usage
 
-To use Osmosis you have to first import the function `useContainer`
+To use Osmosis you have to first import the `setupStore` function
 
 ```js
-import { useContainer } from 'osmosis';
+import { setupStore } from 'osmosis';
 ```
 
-the `useContainer` function takes in an argument that is just a custom hook. The custom hook will return a single object that represents a slice of state, and any functions needed to operate on that state.
+the `setupStore` function takes in an argument that is just a custom hook. The custom hook will return a single object that represents a slice of state, and any functions needed to operate on that state.
 
-`useContainer` returns three variables
+`setupStore` returns three variables
 
 ```js
-let [containerContext, wrapperFunction, containerRef] = useContainer(stateContainer);
+let [containerContext, wrapperFunction, containerRef] = setupStore(stateContainer);
 ```
 
 - `containerContext` is a context variable that gives you access to your state and functions
@@ -38,7 +38,7 @@ To connect the state throughout your app you have to import the `StoreProvider` 
 import { StoreProvider } from 'osmosis';
 ```
 
-`StoreProvider` takes two arguments, the first is an array of the `wrapperFunction`'s returned from `useContainer` and the second is the root component for your app. It then returns the root component fully wrapped with in your state container context.
+`StoreProvider` takes two arguments, the first is an array of the `wrapperFunction`'s returned from `setupStore` and the second is the root component for your app. It then returns the root component fully wrapped with in your state container context.
 
 In the wrapper function array order matters, so the more important state containers should be defined first.
 
@@ -53,7 +53,7 @@ let WrappedRoot = StoreProvider([wrapperFunction1, wrapperFunction2], RootCompon
 import React, { useState } from 'react';
 
 const counterContainer = () => {
-  let [count, setCount] = useState(0);
+  const [count, setCount] = useState(0);
 
   const increment = () => {
     setCount(count + 1);
@@ -85,7 +85,7 @@ import React, { useContext } from 'raect';
 import { CounterContext } from './counter.store';
 
 export default () => {
-  let [counterContext] = useContext(CounterContext);
+  const [counterContext] = useContext(CounterContext);
   let { count } = counterContext.state;
 
   return (
