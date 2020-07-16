@@ -51,6 +51,7 @@ let WrappedRoot = StoreProvider([wrapperFunction1, wrapperFunction2], RootCompon
 ```js
 //counter.store.js
 import React, { useState } from 'react';
+import { setupStore } from 'osmosis';
 
 const counterContainer = () => {
   const [count, setCount] = useState(0);
@@ -72,7 +73,7 @@ const counterContainer = () => {
   };
 };
 
-let [CounterContext, wrapCounter, CounterRef] = useContainer(stateContainer);
+let [CounterContext, wrapCounter, CounterRef] = setupStore(stateContainer);
 
 export { CounterContext, wrapCounter };
 
