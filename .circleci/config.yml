@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/osmosis/.npmrc
+          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
       - run:
           name: Publish package
           command: npm publish
