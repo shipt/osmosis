@@ -20,7 +20,7 @@ To use Osmosis you have to first import the `setupStore` function
 import { setupStore } from 'osmosis';
 ```
 
-the `setupStore` function takes in an argument that is just a custom hook. The custom hook will return a single object that represents a slice of state, and any functions needed to operate on that state.
+The `setupStore` function takes in an argument that is just a custom hook. The custom hook will return a single object that represents a slice of state and any functions needed to operate on that state.
 
 `setupStore` returns three variables
 
@@ -29,8 +29,8 @@ let [containerContext, wrapperFunction, containerRef] = setupStore(useStateConta
 ```
 
 - `containerContext` is a context variable that gives you access to your state and functions
-- `wrapperFunction` is a function that's simply a higher order component used to provide the store to the app, and should be used to wrap the top level component in the app
-- `containerRef` is an object that gives you acess to state variables and functions without causing re-renders when changes occur
+- `wrapperFunction` is simply a higher order component used to provide the store to the app and should be used to wrap the top level component in the app
+- `containerRef` is an object that gives you access to state variables and functions without causing re-renders when changes occur
 
 To connect the state throughout your app you have to import the `StoreProvider` function which is simply an utility for combining several `wrapperFunction`'s into a single higher order component.
 
@@ -38,7 +38,7 @@ To connect the state throughout your app you have to import the `StoreProvider` 
 import { StoreProvider } from 'osmosis';
 ```
 
-`StoreProvider` takes two arguments, the first is an array of the `wrapperFunction`'s returned from `setupStore` and the second is the root component for your app. It then returns the root component fully wrapped with in your state container context.
+`StoreProvider` takes two arguments, the first is an array of the `wrapperFunction`'s returned from `setupStore` and the second is the root component for your app. It then returns the root component fully wrapped within your state container context.
 
 In the wrapper function array order matters, so the more important state containers should be defined first.
 
@@ -82,7 +82,7 @@ export default counterRef;
 
 ```jsx
 //counter.js
-import React, { useContext } from 'raect';
+import React, { useContext } from 'react';
 import { CounterContext } from './counter.store';
 
 export default () => {
