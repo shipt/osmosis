@@ -1,2 +1,2 @@
 export { Container, setupStore } from './setup';
-export StoreProvider from './store.provider';
+export { StoreProvider } from './store.provider';
