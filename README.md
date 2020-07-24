@@ -4,7 +4,7 @@
 
 # Osmosis
 
-react-osmosis is the spontaneous net movement of state objects through a selectively permeable context into a region of higher solute concentration, in the direction that tends to equalize the state concentrations on the two sides.
+Osmosis is the spontaneous net movement of state objects through a selectively permeable context into a region of higher solute concentration, in the direction that tends to equalize the state concentrations on the two sides.
 
 Osmosis uses React context and custom hooks to provide lightweight and modularized global state management for any React or React Native project.
 
