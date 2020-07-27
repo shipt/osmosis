@@ -1,7 +1,7 @@
 version: 2.1
 
 defaults: &defaults
-  working_directory: ~/osmosis/osmosis
+  working_directory: ~/osmosis
   docker:
     - image: circleci/node:12.16.1
 
@@ -10,6 +10,12 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - run:
+          name: Navigate to Osmosis directory
+          command: cd ~/osmosis
+      - run:
+          name: Install Dependencies
+          command: yarn
       - run:
           name: Authenticate with registry
           command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
