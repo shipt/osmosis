@@ -18,13 +18,13 @@ jobs:
           command: yarn
       - run:
           name: Authenticate with registry
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+          command: cd; osmosis; echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
       - run:
           name: build
-          command: yarn build
+          command: cd osmosis; yarn build
       - run:
           name: Publish package
-          command: npm publish
+          command: cd; osmosis; npm publish
 
 workflows:
   version: 2.1
