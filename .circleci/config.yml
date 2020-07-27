@@ -11,20 +11,17 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Navigate to Osmosis directory
-          command: cd ~/osmosis/osmosis
-      - run:
           name: Install Dependencies
           command: yarn
       - run:
           name: Authenticate with registry
-          command: cd; osmosis; echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+          command: cd osmosis; echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
       - run:
           name: build
           command: cd osmosis; yarn build
       - run:
           name: Publish package
-          command: cd; osmosis; npm publish
+          command: cd osmosis; npm publish
 
 workflows:
   version: 2.1
