@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: Install Dependencies
-          command: yarn
+          command: cd osmosis; yarn
       - run:
           name: Authenticate with registry
           command: cd osmosis; echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
