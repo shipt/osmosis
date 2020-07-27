@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: Navigate to Osmosis directory
-          command: cd ~/osmosis
+          command: cd ~/osmosis/osmosis
       - run:
           name: Install Dependencies
           command: yarn
