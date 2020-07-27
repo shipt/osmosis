@@ -1,5 +1,5 @@
 {
-  "name": "osmosis",
+  "name": "react-osmosis",
   "version": "0.1.0",
   "description": "A lightweight React state management library",
   "main": "dist/index.js",
