@@ -1,16 +1,6 @@
 {
-  "name": "osmosis",
+  "name": "",
+  "private": true,
   "version": "0.1.0",
-  "description": "A lightweight React state management library",
-  "main": "src/index.js",
-  "repository": "https://github.com/shipt/osmosis.git",
-  "license": "MIT",
-  "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.2.0",
-    "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-native": "^3.8.1",
-    "react": "^16.13.1",
-    "prettier": "^2.0.5"
-  }
+  "repository": "https://github.com/shipt/osmosis.git"
 }
