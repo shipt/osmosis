@@ -32,3 +32,4 @@ workflows:
             branches:
               only:
                 - master
+                - fix-build-step
