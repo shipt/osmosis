@@ -6,10 +6,14 @@ export default () => {
   let { count } = counterContext.state;
 
   return (
-    <div>
+    <div data-testid="counter-wrap">
       <p>{count}</p>
-      <button onClick={counterContext.increment}>+</button>
-      <button onClick={counterContext.decrement}>-</button>
+      <button data-testid="increment" onClick={counterContext.increment}>
+        +
+      </button>
+      <button data-testid="decrement" onClick={counterContext.decrement}>
+        -
+      </button>
     </div>
   );
 };
