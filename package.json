@@ -4,6 +4,6 @@
   "version": "0.1.0",
   "repository": "https://github.com/shipt/osmosis.git",
   "scripts": {
-    "test": "cd examples/counter-react && yarn && yarn test"
+    "test": "cd examples/counter-react && yarn test"
   }
 }
