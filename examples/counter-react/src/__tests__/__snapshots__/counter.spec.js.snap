@@ -1,3 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Counter renders default 1`] = `undefined`;
+exports[`Counter renders default 1`] = `
+<div
+  data-testid="counter-wrap"
+>
+  <p>
+    0
+  </p>
+  <button
+    data-testid="increment"
+  >
+    +
+  </button>
+  <button
+    data-testid="decrement"
+  >
+    -
+  </button>
+</div>
+`;

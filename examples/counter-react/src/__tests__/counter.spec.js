@@ -18,7 +18,7 @@ describe('Counter', () => {
   );
   it('renders default', async () => {
     let wrapper = await render(<ContextComponent />);
-    expect(wrapper.getByTestId('counter-wrap').props).toMatchSnapshot();
+    expect(wrapper.getByTestId('counter-wrap')).toMatchSnapshot();
   });
   it('tests increment button', async () => {
     let wrapper = await render(<ContextComponent />);
