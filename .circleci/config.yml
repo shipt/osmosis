@@ -1,7 +1,7 @@
 version: 2.1
 
 defaults: &defaults
-  working_directory: ~/osmosis/osmosis
+  working_directory: ~/osmosis
   docker:
     - image: circleci/node:12.16.1
 

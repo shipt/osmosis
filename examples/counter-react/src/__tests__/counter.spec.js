@@ -20,12 +20,12 @@ describe('Counter', () => {
     let wrapper = await render(<ContextComponent />);
     expect(wrapper.getByTestId('counter-wrap').props).toMatchSnapshot();
   });
-  it('tests increment', async () => {
+  it('tests increment button', async () => {
     let wrapper = await render(<ContextComponent />);
     fireEvent.click(wrapper.getByTestId('increment'));
     expect(CounterStore.increment).toHaveBeenCalled();
   });
-  it('tests decrement', async () => {
+  it('tests decrement button', async () => {
     let wrapper = await render(<ContextComponent />);
     fireEvent.click(wrapper.getByTestId('decrement'));
     expect(CounterStore.decrement).toHaveBeenCalled();
