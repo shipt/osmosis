@@ -13,7 +13,7 @@ describe('CounterStore', () => {
     render(<Prep />);
   };
 
-  it('tests increment', async () => {
+  it('tests increment', () => {
     act(() => {
       renderStore();
     });
@@ -24,7 +24,7 @@ describe('CounterStore', () => {
     expect(store.state.count).toEqual(1);
   });
 
-  it('tests decrement', async () => {
+  it('tests decrement', () => {
     act(() => {
       renderStore();
     });
