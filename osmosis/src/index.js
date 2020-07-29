@@ -1,2 +1,1 @@
-export { Container, setupStore } from './setup';
-export { StoreProvider } from './store.provider';
+export { Container, setupStore, StoreProvider } from './lib';
