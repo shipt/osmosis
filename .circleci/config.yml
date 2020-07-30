@@ -6,6 +6,22 @@ defaults: &defaults
     - image: circleci/node:12.16.1
 
 jobs:
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Install Osmosis Dependencies
+          command: cd osmosis; yarn
+      - run:
+          name: Build Osmosis
+          command: cd osmosis; yarn build
+      - run:
+          name: Install React Example Dependencies
+          command: cd examples/counter-react; yarn
+      - run:
+          name: Run React Example Test
+          command: yarn test
   deploy:
     <<: *defaults
     steps:
@@ -27,7 +43,10 @@ workflows:
   version: 2.1
   deploy:
     jobs:
+      - test
       - deploy:
+          requires:
+            - test
           filters:
             branches:
               only:
