@@ -13,7 +13,7 @@ Osmosis uses React context and custom hooks to provide lightweight and modulariz
 ## Installation
 
 ```
-yarn add osmosis
+yarn add @shipt/osmosis
 ```
 
 ## Usage
