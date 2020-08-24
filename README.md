@@ -21,7 +21,7 @@ yarn add @shipt/osmosis
 To use Osmosis you have to first import the `setupStore` function
 
 ```js
-import { setupStore } from 'osmosis';
+import { setupStore } from '@shipt/osmosis';
 ```
 
 The `setupStore` function takes in an argument that is just a custom hook. The custom hook will return a single object that represents a slice of state and any functions needed to operate on that state.
@@ -39,7 +39,7 @@ let [containerContext, wrapperFunction, containerRef] = setupStore(useStateConta
 To connect the state throughout your app you have to import the `StoreProvider` function which is simply an utility for combining several `wrapperFunction`'s into a single higher order component.
 
 ```js
-import { StoreProvider } from 'osmosis';
+import { StoreProvider } from '@shipt/osmosis';
 ```
 
 `StoreProvider` takes two arguments, the first is an array of the `wrapperFunction`'s returned from `setupStore` and the second is the root component for your app. It then returns the root component fully wrapped within your state container context.
@@ -55,7 +55,7 @@ let WrappedRoot = StoreProvider([wrapperFunction1, wrapperFunction2], RootCompon
 ```js
 //counter.store.js
 import React, { useState } from 'react';
-import { setupStore } from 'osmosis';
+import { setupStore } from '@shipt/osmosis';
 
 const useCounterContainer = () => {
   const [count, setCount] = useState(0);
@@ -105,7 +105,7 @@ export default () => {
 
 ```jsx
 //index.js Root Component
-import { StoreProvider } from 'osmosis';
+import { StoreProvider } from '@shipt/osmosis';
 import { wrapCounter } from './counter.store';
 import Counter from './counter';
 
