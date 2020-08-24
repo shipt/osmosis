@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { setupStore } from 'osmosis';
+import { setupStore } from '@shipt/osmosis';
 
 const useCounterContainer = () => {
   const [count, setCount] = useState(0);
