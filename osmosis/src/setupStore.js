@@ -9,6 +9,7 @@ class Container {
 }
 
 const setupStore = (useHook, classContainer) => {
+  console.warn('running this now');
   const StoreContext = createContext();
   let store = { state: {} };
 
