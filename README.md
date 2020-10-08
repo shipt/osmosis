@@ -114,7 +114,7 @@ export default StoreProvider([wrapCounter], Counter);
 
 ## State Persistence with usePersistedState
 
-In order to simplify working with state that needs to be persisted, this library includes a useful utility hook called `usePersistedState`. The persistence for this hook must be configured, and the user can set this up to store key/value pairs with any persistence layer required with using a simple configuration step.
+In order to simplify working with state that needs to be persisted, this library includes a useful utility hook called `usePersistedState`. The persistence for this hook must be configured, and the user can set this up to store key/value pairs with any persistence layer required by using a simple configuration step on app launch.
 
 ### Configuration
 
