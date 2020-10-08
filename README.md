@@ -140,6 +140,8 @@ configureUsePersistedState({ getItem, setItem });
 `usePersistedState` is similar to using React's `useState`, with only a few minor modifications. The hook can be used by performing the following:
 
 ```js
+import { usePersistedState } from '@shipt/osmosis';
+
 const [stateValue, setStateValue, isHydrated] = usePersistedState(initialValue, persistenceKey);
 ```
 
