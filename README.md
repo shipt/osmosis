@@ -147,11 +147,11 @@ const [stateValue, setStateValue, isHydrated] = usePersistedState(initialValue, 
 
 Where the hook params are:
 
-- initialValue = the initial value to use for this state, just like from `useState`. This value truly only for the first initialization and will be overridden by any persisted state that is rehydrated on mount.
-- persistenceKey = the key to be passed to the configured `setItem` function to store the value in the persistence layer.
+- **initialValue** = the initial value to use for this state, just like from `useState`. This value truly only for the first initialization and will be overridden by any persisted state that is rehydrated on mount.
+- **persistenceKey** = the key to be passed to the configured `setItem` function to store the value in the persistence layer.
 
 And the return params are:
 
-- stateValue = the value as stored in state, just like from `useState`.
-- setStateValue = the function to update the value in state. This is almost identical to the function returned from `useState`. The only difference is that in addition to setting the current value in state, it also asynchronously calls the configured `setItem` function to allow the user to store the latest state value in the persistence layer desired, using the `persistenceKey` supplied.
-- isHydrated = a boolean value determining if the persisted value has been loaded into state. Since reading and writing values to the persistence layer is done async, it is often required to delay performing certain actions after the persisted state has been rehydrated into state during the current app session, such as refreshing a user's persisted but expired auth token.
+- **stateValue** = the value as stored in state, just like from `useState`.
+- **setStateValue** = the function to update the value in state. This is almost identical to the function returned from `useState`. The only difference is that in addition to setting the current value in state, it also asynchronously calls the configured `setItem` function to allow the user to store the latest state value in the persistence layer desired, using the `persistenceKey` supplied.
+- **isHydrated** = a boolean value determining if the persisted value has been loaded into state. Since reading and writing values to the persistence layer is done async, it is often required to delay performing certain actions after the persisted state has been rehydrated into state during the current app session, such as refreshing a user's persisted but expired auth token.
