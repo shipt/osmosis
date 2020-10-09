@@ -90,7 +90,7 @@ import React, { useContext } from 'react';
 import { CounterContext } from './counter.store';
 
 export default () => {
-  const [counterContext] = useContext(CounterContext);
+  const counterContext = useContext(CounterContext);
   let { count } = counterContext.state;
 
   return (
