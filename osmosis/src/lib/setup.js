@@ -1,4 +1,4 @@
-import React, {createContext} from 'react';
+import React, { createContext } from 'react';
 
 class Container {
   constructor() {
@@ -10,7 +10,7 @@ class Container {
 
 const setupStore = (useHook, classContainer) => {
   const StoreContext = createContext();
-  let store = {state: {}};
+  let store = { state: {} };
 
   const withStoreContext = WrappedComponent => props => {
     let container = useHook();
@@ -32,4 +32,4 @@ const setupStore = (useHook, classContainer) => {
   return [StoreContext, withStoreContext, store];
 };
 
-export {Container, setupStore};
+export { Container, setupStore };
