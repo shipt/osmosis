@@ -147,7 +147,7 @@ const [stateValue, setStateValue, isHydrated] = usePersistedState(initialValue, 
 
 Where the hook params are:
 
-- **initialValue** = the initial value to use for this state, just like from `useState`. This value truly only for the first initialization and will be overridden by any persisted state that is rehydrated on mount.
+- **initialValue** = the initial value to use for this state, just like from `useState`. This only initializes the state value at run time. If present, the initial value will be overridden by any persisted state that is rehydrated on mount.
 - **persistenceKey** = the key to be passed to the configured `setItem` function to store the value in the persistence layer.
 
 And the return params are:
