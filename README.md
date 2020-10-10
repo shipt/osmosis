@@ -13,7 +13,7 @@ Osmosis uses React context and custom hooks to provide lightweight and modulariz
 ## Installation
 
 ```
-yarn add osmosis
+yarn add @shipt/osmosis
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ yarn add osmosis
 To use Osmosis you have to first import the `setupStore` function
 
 ```js
-import { setupStore } from 'osmosis';
+import { setupStore } from '@shipt/osmosis';
 ```
 
 The `setupStore` function takes in an argument that is just a custom hook. The custom hook will return a single object that represents a slice of state and any functions needed to operate on that state.
@@ -39,7 +39,7 @@ let [containerContext, wrapperFunction, containerRef] = setupStore(useStateConta
 To connect the state throughout your app you have to import the `StoreProvider` function which is simply an utility for combining several `wrapperFunction`'s into a single higher order component.
 
 ```js
-import { StoreProvider } from 'osmosis';
+import { StoreProvider } from '@shipt/osmosis';
 ```
 
 `StoreProvider` takes two arguments, the first is an array of the `wrapperFunction`'s returned from `setupStore` and the second is the root component for your app. It then returns the root component fully wrapped within your state container context.
@@ -55,7 +55,7 @@ let WrappedRoot = StoreProvider([wrapperFunction1, wrapperFunction2], RootCompon
 ```js
 //counter.store.js
 import React, { useState } from 'react';
-import { setupStore } from 'osmosis';
+import { setupStore } from '@shipt/osmosis';
 
 const useCounterContainer = () => {
   const [count, setCount] = useState(0);
@@ -105,9 +105,53 @@ export default () => {
 
 ```jsx
 //index.js Root Component
-import { StoreProvider } from 'osmosis';
+import { StoreProvider } from '@shipt/osmosis';
 import { wrapCounter } from './counter.store';
 import Counter from './counter';
 
 export default StoreProvider([wrapCounter], Counter);
 ```
+
+## State Persistence with usePersistedState
+
+In order to simplify working with state that needs to be persisted, this library includes a useful utility hook called `usePersistedState`. The persistence for this hook must be configured, and the user can set this up to store key/value pairs with any persistence layer required by using a simple configuration step on app launch.
+
+### Configuration
+
+To configure the persistence layer for `usePersistedState`, simply perform something similar to the following when the app first loads:
+
+```js
+import { configureUsePersistedState } from '@shipt/osmosis';
+
+async function getItem(key) {
+  let value = // perform async actions to return the value for the key provided 
+  return value;
+}
+
+async function setItem(key, value) {
+  // perform async actions to store the value in storage based on the provided key
+}
+
+configureUsePersistedState({ getItem, setItem });
+```
+
+### Usage
+
+`usePersistedState` is similar to using React's `useState`, with only a few minor modifications. The hook can be used by performing the following:
+
+```js
+import { usePersistedState } from '@shipt/osmosis';
+
+const [stateValue, setStateValue, isHydrated] = usePersistedState(initialValue, persistenceKey);
+```
+
+Where the hook params are:
+
+- **initialValue** = the initial value to use for this state, just like from `useState`. This only initializes the state value at run time. If present, the initial value will be overridden by any persisted state that is rehydrated on mount.
+- **persistenceKey** = the key to be passed to the configured `setItem` function to store the value in the persistence layer.
+
+And the return params are:
+
+- **stateValue** = the value as stored in state, just like from `useState`.
+- **setStateValue** = the function to update the value in state. This is almost identical to the function returned from `useState`. The only difference is that in addition to setting the current value in state, it also asynchronously calls the configured `setItem` function to allow the user to store the latest state value in the persistence layer desired, using the `persistenceKey` supplied.
+- **isHydrated** = a boolean value determining if the persisted value has been loaded into state. Since reading and writing values to the persistence layer is done async, it is often required to delay performing certain actions after the persisted state has been rehydrated into state during the current app session, such as refreshing a user's persisted but expired auth token.
