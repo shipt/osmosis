@@ -1,5 +1,5 @@
 <p align="center">
-<img width="300" src="./logo.png" />
+<img width="300" src="https://github.com/shipt/osmosis/blob/master/logo.png" />
 </p>
 
 # Osmosis
