@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { setupStore } from '@shipt/osmosis';
 
 const useCounterContainer = () => {
