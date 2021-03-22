@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { CounterContext } from './store';
 
-export default () => {
+const Counter = () => {
   const [counterContext] = useContext(CounterContext);
   let { count } = counterContext.state;
 
@@ -17,3 +17,5 @@ export default () => {
     </div>
   );
 };
+
+export default Counter;
