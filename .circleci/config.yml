@@ -37,7 +37,7 @@ jobs:
           command: cd osmosis; yarn build
       - run:
           name: Publish package
-          command: cd osmosis; npm publish
+          command: cd osmosis; npm publish --access public
 
 workflows:
   version: 2.1
