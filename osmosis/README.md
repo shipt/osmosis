@@ -4,7 +4,7 @@
 
 # Osmosis
 
-Osmosis utilizes React context and allows you to create your own custom hooks to provide a lightweight and modularized global state management for any React or React Native project.
+Osmosis utilizes React context and allows you to create your own custom hooks to provide a lightweight and modularized solution for global state management for any React or React Native project.
 
 # Overview
 
@@ -145,7 +145,7 @@ const [stateValue, setStateValue, isHydrated] = usePersistedState(initialValue, 
 
 Where the hook params are:
 
-- **initialValue**: the initial value to use for this state, just like from `useState`. This only initializes the state value at run time. If present, the initial value will be overridden by any persisted state that is rehydrated on the mount.
+- **initialValue**: the initial value to use for this state, just like from `useState`. This only initializes the state value at run time. If present, the initial value will be overridden by any persisted state that is rehydrated when mounted.
 
 - **persistenceKey**: the key to be passed to the configured `setItem` function to store the value in the persistence layer.
 
