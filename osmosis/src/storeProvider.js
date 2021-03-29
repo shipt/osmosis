@@ -1,8 +1,11 @@
 export const StoreProvider = (storeProviders, wrappedComponent) => {
-  if (!storeProviders || !wrappedComponent) {
-    throw new Error('could not find array of store providers or your wrapped root component; please ensure your provide at least an empty array and your root component to the StoreProvider from osmosis');
-  }
+  if(!Array.isArray(storeProviders)) throw new Error('StoreProvider requires an array of wrapper functions')
+  if(!wrappedComponent) throw new Error('StoreProvider requires the root component of your app')
 
-  storeProviders.reverse().forEach(provider => (wrappedComponent = provider(wrappedComponent)));
-  return wrappedComponent;
+  try {
+    storeProviders.reverse().forEach(provider => (wrappedComponent = provider(wrappedComponent)));
+    return wrappedComponent;
+  } catch(error) {
+    throw new Error('something went wrong with StoreProvider arguments:\n' + error)
+  }
 };
