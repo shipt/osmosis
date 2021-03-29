@@ -112,7 +112,7 @@ export default StoreProvider([wrapCounter], Counter);
 
 ## State Persistence with usePersistedState
 
-In order to simplify working with a state that needs to be persisted, this library includes a useful utility hook called `usePersistedState`. The persistence for this hook must be configured, and the user can set this up to store key/value pairs with any persistence layer required by using a simple configuration step on app launch.
+In order to simplify working with state that needs to be persisted, this library includes a useful utility hook called `usePersistedState`. The persistence for this hook must be configured, and the user can set this up to store key/value pairs with any persistence layer required by using a simple configuration step on app launch.
 
 ### Configuration
 
@@ -153,6 +153,6 @@ And the return params are:
 
 - **stateValue**: the value as stored in state, just like from `useState`.
 
-- **setStateValue**: the function to update the value in state. This is almost identical to the function returned from `useState`. The only difference is that in addition to setting the current value in the state, it also asynchronously calls the configured `setItem` function to allow the user to store the latest state value in the persistence layer desired, using the `persistenceKey` supplied.
+- **setStateValue**: the function to update the value in state. This is almost identical to the function returned from `useState`. The only difference is that in addition to setting the current value in state, it also asynchronously calls the configured `setItem` function to allow the user to store the latest state value in the persistence layer desired, using the `persistenceKey` supplied.
 
-- **isHydrated**: a boolean value determining if the persisted value has been loaded into the state. Since reading and writing values to the persistence layer are done async, it is often required to delay performing certain actions after the persisted state has been rehydrated into the state during the current app session, such as refreshing a user's persisted but expired auth token.
+- **isHydrated**: a boolean value determining if the persisted value has been loaded into state. Since reading and writing values to the persistence layer are done async, it is often required to delay performing certain actions after the persisted state has been rehydrated into state during the current app session, such as refreshing a user's persisted but expired auth token.
