@@ -71,7 +71,7 @@ jobs:
     #   make release
     - name: Slack-end-of-scan
       uses: archive/github-actions-slack@v2.0.0
-      id: notify1
+      id: notify2
       with:
         slack-bot-user-oauth-access-token: ${{ secrets.SAST_SLACK_TOKEN }}
         slack-channel: ${{ secrets.SAST_SLACK_CHANNEL }} #USE CHANNEL ID, NOT CHANNEL NAME, SINCE ID IS USED IN NEW SLACK API's
