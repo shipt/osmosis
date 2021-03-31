@@ -27,12 +27,12 @@ The `setupStore` function takes in an argument that is just a custom hook. The c
 `setupStore` returns three variables
 
 ```js
-let [containerContext, wrapperFunction, containerRef] = setupStore(useStateContainer);
+let [storeContext, wrapperFunction, storeRef] = setupStore(useStateStore);
 ```
 
-- `containerContext` is a context variable that gives you access to your state and functions
+- `storeContext` is a React context variable that gives you access to the state and functions of your store
 - `wrapperFunction` is simply a higher-order component used to provide the store to the app and should be used to wrap the top-level component in the app
-- `containerRef` is an object that gives you access to state variables and functions without causing re-renders when changes occur
+- `storeRef` is an object that gives you access to state variables and functions without causing re-renders when changes occur
 
 To connect the state throughout your app you have to import the `StoreProvider` function which is simply a utility for combining several `wrapperFunction`'s into a single higher order component.
 
@@ -40,9 +40,9 @@ To connect the state throughout your app you have to import the `StoreProvider` 
 import { StoreProvider } from '@shipt/osmosis';
 ```
 
-`StoreProvider` takes two arguments, the first is an array of the `wrapperFunction`'s returned from `setupStore` and the second is the root component for your app. It then returns the root component fully wrapped within your state container context.
+`StoreProvider` takes two arguments, the first is an array of the `wrapperFunction`'s returned from `setupStore` and the second is the root component for your app. It then returns the root component fully wrapped within your state store context.
 
-In the wrapper function array order matters, so the more important state containers should be defined first.
+In the wrapper function array order matters, so the stores which belong higher in the store module hierarchy should be listed first.
 
 ```js
 let WrappedRoot = StoreProvider([wrapperFunction1, wrapperFunction2], RootComponent);
@@ -55,7 +55,7 @@ let WrappedRoot = StoreProvider([wrapperFunction1, wrapperFunction2], RootCompon
 import React, { useState } from 'react';
 import { setupStore } from '@shipt/osmosis';
 
-const useCounterContainer = () => {
+const useCounterStore = () => {
   const [count, setCount] = useState(0);
 
   const increment = () => {
@@ -75,7 +75,7 @@ const useCounterContainer = () => {
   };
 };
 
-let [CounterContext, wrapCounter, counterRef] = setupStore(useCounterContainer);
+let [CounterContext, wrapCounter, counterRef] = setupStore(useCounterStore);
 
 export { CounterContext, wrapCounter };
 
