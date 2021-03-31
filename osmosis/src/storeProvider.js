@@ -6,6 +6,6 @@ export const StoreProvider = (storeProviders, wrappedComponent) => {
     storeProviders.reverse().forEach(provider => (wrappedComponent = provider(wrappedComponent)));
     return wrappedComponent;
   } catch(error) {
-    throw new Error('something went wrong with StoreProvider arguments:\n' + error)
+    throw new Error(`StoreProvider encountered an error: ${error.message}`)
   }
 };
