@@ -4,6 +4,7 @@
 
 * Cleaning up some unused files
 * Adding better error messages for usePersistedState and StoreProvider
+* README updates and tweaks
 
 ## v1.0.0
 
