@@ -44,10 +44,24 @@ export const usePersistedState = (initValue, key) => {
   return [state.value, setPersistedState, state.isLoaded];
 };
 
+
+/**
+ * @callback getItem
+ * @param {string} key
+ * @returns {Promise} Promise<value>
+ */
+
+/**
+ * @callback setItem
+ * @param {string} key
+ * @param {Object} value
+ * @returns {Promise} Promise<>
+ */
+
 /**
  * @param {Object} config
- * @param {Object} config.getItem
- * @param {Object} config.setItem
+ * @param {getItem} config.getItem
+ * @param {setItem} config.setItem
  */
 export const configureUsePersistedState = config => {
   getItem = config.getItem;
