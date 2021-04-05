@@ -8,6 +8,16 @@ class Container {
   }
 }
 
+/**
+ * @callback useHook
+ * @returns {Object}
+ */
+
+/**
+ * @param {useHook} useHook
+ * @param {Object} [classContainer]
+ * @returns {Object[]}
+ */
 const setupStore = (useHook, classContainer) => {
   const StoreContext = createContext();
   let store = { state: {} };

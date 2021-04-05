@@ -3,6 +3,11 @@ import { useState, useEffect } from 'react';
 let getItem;
 let setItem;
 
+/**
+ * @param {Object} initValue
+ * @param {string} key
+ * @returns {Object[]}
+ */
 export const usePersistedState = (initValue, key) => {
   if (!key) console.error('usePersistedState: Storage key is required');
 
@@ -39,6 +44,11 @@ export const usePersistedState = (initValue, key) => {
   return [state.value, setPersistedState, state.isLoaded];
 };
 
+/**
+ * @param {Object} config
+ * @param {Object} config.getItem
+ * @param {Object} config.setItem
+ */
 export const configureUsePersistedState = config => {
   getItem = config.getItem;
   setItem = config.setItem;

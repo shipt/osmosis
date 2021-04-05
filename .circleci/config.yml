@@ -15,7 +15,11 @@ jobs:
           command: cd osmosis; yarn
       - run:
           name: Build Osmosis
-          command: cd osmosis; yarn build
+          command: |
+            cd osmosis
+            yarn add typescript
+            npx typescript src/**/*.js --declaration --allowJs --emitDeclarationOnly --outDir dist
+            yarn build
       - run:
           name: Install React Example Dependencies
           command: cd examples/counter-react; yarn
@@ -35,6 +39,9 @@ jobs:
       - run:
           name: build
           command: cd osmosis; yarn build
+      - run:
+          name: Generate Types
+          command: cd osmosis; npx typescript src/**/*.js --declaration --allowJs --emitDeclarationOnly --outDir dist
       - run:
           name: Publish package
           command: cd osmosis; npm publish --access public
