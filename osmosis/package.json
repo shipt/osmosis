@@ -23,7 +23,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "babel src -d dist"
+    "build": "babel src -d dist",
+    "generateTypes": "npx typescript ./src/index.js --declaration --allowJs --emitDeclarationOnly --outDir dist"
   },
   "peerDependencies": {
     "react": "^16.8.0"
