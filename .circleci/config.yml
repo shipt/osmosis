@@ -5,17 +5,31 @@ defaults: &defaults
   docker:
     - image: circleci/node:12.16.1
 
+install_dependencies: &install_dependencies
+  run:
+    name: Install Dependencies
+    command: cd osmosis; yarn
+
+build_osmosis: &build_osmosis
+  run:
+    name: Build
+    command: cd osmosis; yarn build
+
+generate_types: &generate_types
+  run:
+    name: Generate Types
+    command: cd osmosis; yarn generateTypes
+
+
+
 jobs:
   test:
     <<: *defaults
     steps:
       - checkout
-      - run:
-          name: Install Osmosis Dependencies
-          command: cd osmosis; yarn
-      - run:
-          name: Build Osmosis
-          command: cd osmosis; yarn build
+      - <<: *install_dependencies
+      - <<: *build_osmosis
+      - <<: *generate_types
       - run:
           name: Install React Example Dependencies
           command: cd examples/counter-react; yarn
@@ -26,15 +40,12 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run:
-          name: Install Dependencies
-          command: cd osmosis; yarn
+      - <<: *install_dependencies
+      - <<: *build_osmosis
+      - <<: *generate_types
       - run:
           name: Authenticate with registry
           command: cd osmosis; echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
-      - run:
-          name: build
-          command: cd osmosis; yarn build
       - run:
           name: Publish package
           command: cd osmosis; npm publish --access public

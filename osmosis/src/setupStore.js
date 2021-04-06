@@ -8,12 +8,22 @@ class Container {
   }
 }
 
-const setupStore = (useHook, classContainer) => {
+/**
+ * @callback useCustomHook
+ * @returns {Object}
+ */
+
+/**
+ * @param {useCustomHook} useCustomHook
+ * @param {Object=} classContainer - Deprecated: classContainer support will be removed in a future release
+ * @returns {Object[]}
+ */
+const setupStore = (useCustomHook, classContainer) => {
   const StoreContext = createContext();
   let store = { state: {} };
 
   const withStoreContext = WrappedComponent => props => {
-    let container = useHook();
+    let container = useCustomHook();
     if (classContainer) {
       classContainer.container = container;
     } else {
