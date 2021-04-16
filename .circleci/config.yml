@@ -20,8 +20,6 @@ generate_types: &generate_types
     name: Generate Types
     command: cd osmosis; yarn generateTypes
 
-
-
 jobs:
   test:
     <<: *defaults
@@ -49,6 +47,9 @@ jobs:
       - run:
           name: Publish package
           command: cd osmosis; npm publish --access public
+      - run:
+          name: Create Git Version Tag
+          command: "cd osmosis; PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags"
 
 workflows:
   version: 2.1

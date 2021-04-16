@@ -1,13 +1,5 @@
 import React, { createContext } from 'react';
 
-class Container {
-  constructor() {
-    this.container = {
-      state: {}
-    };
-  }
-}
-
 /**
  * @callback useCustomHook
  * @returns {Object}
@@ -15,31 +7,26 @@ class Container {
 
 /**
  * @param {useCustomHook} useCustomHook
- * @param {Object=} classContainer - Deprecated: classContainer support will be removed in a future release
  * @returns {Object[]}
  */
-const setupStore = (useCustomHook, classContainer) => {
+const setupStore = useCustomHook => {
   const StoreContext = createContext();
-  let store = { state: {} };
+  let storeRef = { state: {} };
 
   const withStoreContext = WrappedComponent => props => {
-    let container = useCustomHook();
-    if (classContainer) {
-      classContainer.container = container;
-    } else {
-      for (let key in container) {
-        store[key] = container[key];
-      }
+    let store = useCustomHook();
+    for (let key in store) {
+      storeRef[key] = store[key];
     }
 
     return (
-      <StoreContext.Provider value={[container]}>
+      <StoreContext.Provider value={[store]}>
         <WrappedComponent {...props} />
       </StoreContext.Provider>
     );
   };
 
-  return [StoreContext, withStoreContext, store];
+  return [StoreContext, withStoreContext, storeRef];
 };
 
-export { Container, setupStore };
+export { setupStore };

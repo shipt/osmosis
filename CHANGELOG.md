@@ -1,5 +1,9 @@
 # Change Log
 
+## v1.1.0
+
+* Removed deprecated class based container logic
+
 ## v1.0.2
 
 * Added generated type declarations
