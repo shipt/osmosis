@@ -1,5 +1,23 @@
-import Osmosis from '@shipt/osmosis';
-import { wrapCounter } from './store';
-import Counter from './counter';
+import { StoreProvider, configureUsePersistedState } from '@shipt/osmosis';
+import { CounterWrapper, CounterWithReducerWrapper } from './store';
 
-export default Osmosis.StoreProvider([wrapCounter], Counter);
+import Counter from './counter';
+import PersistedCounter from './persistedCounter.js';
+import DispactCounter from './dispatchCounter.js';
+
+configureUsePersistedState({
+  getItem: key => JSON.parse(window.localStorage.getItem(key)),
+  setItem: (key, value) => window.localStorage.setItem(key, JSON.stringify(value))
+});
+
+const App = () => {
+  return (
+    <>
+      <Counter />
+      <PersistedCounter />
+      <DispactCounter />
+    </>
+  );
+};
+
+export default StoreProvider([CounterWrapper, CounterWithReducerWrapper], App);

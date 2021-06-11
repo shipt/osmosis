@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import { CounterContext, wrapCounter } from '../counter.store';
+import { CounterContext, CounterWrapper} from '../counter.store';
 import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
 describe('CounterStore', () => {
   let store;
   const renderStore = () => {
-    let Prep = wrapCounter(() => {
+    let Prep = CounterWrapper(() => {
       store = useContext(CounterContext)[0];
       return null;
     });
@@ -19,7 +19,7 @@ describe('CounterStore', () => {
     });
     expect(store.state.count).toEqual(0);
     act(() => {
-      store.increment();
+      store.incrementCount();
     });
     expect(store.state.count).toEqual(1);
   });
@@ -30,7 +30,7 @@ describe('CounterStore', () => {
     });
     expect(store.state.count).toEqual(0);
     act(() => {
-      store.decrement();
+      store.decrementCount();
     });
     expect(store.state.count).toEqual(-1);
   });

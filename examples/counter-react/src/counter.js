@@ -7,12 +7,12 @@ const Counter = () => {
 
   return (
     <div data-testid="counter-wrap">
-      <p>{count}</p>
-      <button data-testid="increment" onClick={counterContext.increment}>
-        +
-      </button>
-      <button data-testid="decrement" onClick={counterContext.decrement}>
+      <p>Count: {count}</p>
+      <button data-testid="decrement" onClick={counterContext.decrementCount}>
         -
+      </button>
+      <button data-testid="increment" onClick={counterContext.incrementCount}>
+        +
       </button>
     </div>
   );

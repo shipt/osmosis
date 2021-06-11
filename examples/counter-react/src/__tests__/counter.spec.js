@@ -8,8 +8,8 @@ describe('Counter', () => {
     state: {
       count: 0
     },
-    increment: jest.fn(),
-    decrement: jest.fn()
+    incrementCount: jest.fn(),
+    decrementCount: jest.fn()
   };
   let ContextComponent = () => (
     <CounterContext.Provider value={[CounterStore]}>
@@ -23,11 +23,11 @@ describe('Counter', () => {
   it('tests increment button', async () => {
     let wrapper = await render(<ContextComponent />);
     fireEvent.click(wrapper.getByTestId('increment'));
-    expect(CounterStore.increment).toHaveBeenCalled();
+    expect(CounterStore.incrementCount).toHaveBeenCalled();
   });
   it('tests decrement button', async () => {
     let wrapper = await render(<ContextComponent />);
     fireEvent.click(wrapper.getByTestId('decrement'));
-    expect(CounterStore.decrement).toHaveBeenCalled();
+    expect(CounterStore.decrementCount).toHaveBeenCalled();
   });
 });
