@@ -5,17 +5,18 @@ exports[`Counter renders default 1`] = `
   data-testid="counter-wrap"
 >
   <p>
+    Count: 
     0
   </p>
-  <button
-    data-testid="increment"
-  >
-    +
-  </button>
   <button
     data-testid="decrement"
   >
     -
+  </button>
+  <button
+    data-testid="increment"
+  >
+    +
   </button>
 </div>
 `;
