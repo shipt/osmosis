@@ -1,26 +1,30 @@
 import { useState } from 'react';
-import { setupStore } from '@shipt/osmosis';
+import { setupStore, usePersistedState } from '@shipt/osmosis';
 
 const useCounterContainer = () => {
   const [count, setCount] = useState(0);
+  const [persistedCount, setPersistedCount] = usePersistedState(0, 'persistedCount');
 
-  const increment = () => {
-    setCount(count + 1);
-  };
+  const incrementCount = () => setCount(count + 1);
 
-  const decrement = () => {
-    setCount(count - 1);
-  };
+  const decrementCount = () => setCount(count - 1);
+
+  const incrementPersistedCount = () => setPersistedCount(persistedCount + 1);
+
+  const decrementPersistedCount = () => setPersistedCount(persistedCount - 1);
 
   return {
     state: {
-      count
+      count,
+      persistedCount
     },
-    increment,
-    decrement
+    incrementCount,
+    decrementCount,
+    incrementPersistedCount,
+    decrementPersistedCount
   };
 };
 
-let [CounterContext, wrapCounter, counterRef] = setupStore(useCounterContainer);
+let [CounterContext, CounterWrapper, counterRef] = setupStore(useCounterContainer);
 
-export { CounterContext, wrapCounter, counterRef };
+export { CounterContext, CounterWrapper, counterRef };

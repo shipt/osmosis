@@ -1,8 +1,15 @@
 {
   "name": "@shipt/osmosis",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A lightweight state management library for React and React Native",
-  "keywords": ["react", "react native", "state management", "hooks", "state persistence", "shipt"],
+  "keywords": [
+    "react",
+    "react native",
+    "state management",
+    "hooks",
+    "state persistence",
+    "shipt"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "homepage": "https://github.com/shipt/osmosis",
@@ -29,5 +36,5 @@
   },
   "peerDependencies": {
     "react": "^16.8.0"
- }
+  }
 }

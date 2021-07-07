@@ -1,5 +1,9 @@
 # Change Log
 
+## v1.1.1
+
+* Minor dependency updates
+
 ## v1.1.0
 
 * Removed deprecated class based container logic
