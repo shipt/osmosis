@@ -27,7 +27,7 @@ const setupStore = useCustomHook => {
   };
   storeRef.Context = StoreContext;
   storeRef.Provider = withStoreContext;
-  return [StoreContext, withStoreContext, storeRef];
+  return [ storeRef ];
 };
 
 export { setupStore };
