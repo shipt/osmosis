@@ -1,6 +1,6 @@
 import React from 'react';
 import Counter from '../counter';
-import { CounterContext } from '../store';
+import { counterRef } from '../store';
 import { render, fireEvent } from '@testing-library/react';
 
 describe('Counter', () => {
@@ -12,9 +12,9 @@ describe('Counter', () => {
     decrementCount: jest.fn()
   };
   let ContextComponent = () => (
-    <CounterContext.Provider value={[CounterStore]}>
+    <counterRef.Context.Provider value={[CounterStore]}>
       <Counter />
-    </CounterContext.Provider>
+    </counterRef.Context.Provider>
   );
   it('renders default', async () => {
     let wrapper = await render(<ContextComponent />);
