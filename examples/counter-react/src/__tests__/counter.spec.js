@@ -11,6 +11,7 @@ describe('Counter', () => {
     incrementCount: jest.fn(),
     decrementCount: jest.fn()
   };
+  console.log(counterRef);
   let ContextComponent = () => (
     <counterRef.Context.Provider value={[CounterStore]}>
       <Counter />

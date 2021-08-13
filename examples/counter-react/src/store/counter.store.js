@@ -27,4 +27,4 @@ const useCounterContainer = () => {
 
 let counterRef = setupStore(useCounterContainer);
 
-export { counterRef };
+export default counterRef ;
