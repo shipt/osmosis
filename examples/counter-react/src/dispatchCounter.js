@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { CounterWithReducerRef } from './store';
+import { CounterWithReducerStore } from './store';
 
 const PersistedCounter = () => {
-  const [counterContext] = useContext(CounterWithReducerRef.Context);
+  const [counterContext] = useContext(CounterWithReducerStore.Context);
   let { dispatch, counterState: { count }} = counterContext;
 
   return (
