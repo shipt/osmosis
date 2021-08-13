@@ -15,10 +15,9 @@ const setupStore = useCustomHook => {
 
   const withStoreContext = WrappedComponent => props => {
     let store = useCustomHook();
-    const e = "cannot have previous 'Provider' or 'Context' defined";
     if (store.Provider != undefined || store.Context != undefined)
     {
-      return e;
+      throw "cannot have previous 'Provider' or 'Context' defined";
     }
     for (let key in store) {
       storeRef[key] = store[key];
