@@ -33,4 +33,4 @@ const setupStore = useCustomHook => {
   return storeRef;
 };
 
-export default setupStore;
+export { setupStore };
