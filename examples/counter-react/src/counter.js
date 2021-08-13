@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { counterRef } from './store';
+import { CounterStore } from './store';
 
 const Counter = () => {
-  const [counterContext] = useContext(counterRef.Context);
+  const [counterContext] = useContext(CounterStore.Context);
   let { count } = counterContext.state;
 
   return (

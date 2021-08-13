@@ -25,6 +25,6 @@ const useCounterContainer = () => {
   };
 };
 
-let counterRef = setupStore(useCounterContainer);
+let CounterStore = setupStore(useCounterContainer);
 
-export default counterRef ;
+export default CounterStore ;
