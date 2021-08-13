@@ -15,10 +15,9 @@ const setupStore = useCustomHook => {
 
   const withStoreContext = WrappedComponent => props => {
     let store = useCustomHook();
-    if (store.Provider != undefined || store.Context != undefined)
-    {
-      throw "cannot have previous 'Provider' or 'Context' defined";
-    }
+    if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
+    if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
+
     for (let key in store) {
       storeRef[key] = store[key];
     }
