@@ -23,6 +23,6 @@ const useCounterWithReducerStore = () => {
   };
 };
 
-let [CounterWithReducerContext, CounterWithReducerWrapper, counterWithReducerRef] = setupStore(useCounterWithReducerStore);
+let  CounterWithReducerStore = setupStore(useCounterWithReducerStore);
 
-export { CounterWithReducerContext, CounterWithReducerWrapper, counterWithReducerRef};
+export default CounterWithReducerStore;
