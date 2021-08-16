@@ -63,7 +63,11 @@ const setupStore = (useCustomHook, config = _defaultConfig) => {
       },
       set: (target, property, value) => (target.ref[property] = value)
     });
+  } else {
+    storeRef.Context = StoreContext;
+    storeRef.Provider = withStoreContext;
   }
+
 
   return storeProxy || storeRef;
 };
