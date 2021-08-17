@@ -34,16 +34,26 @@ export const usePersistedState = (initValue, key) => {
   };
 
   const setPersistedState = value => {
-    if (setItem) setItem(key, value);
-    setState({
-      value,
-      isLoaded: true
-    });
+    if (typeof value === 'function') {
+      setState(currentValue => {
+        const newValue = value(currentValue.value);
+        if (setItem) setItem(key, newValue);
+        return {
+          value: newValue,
+          isLoaded: true
+        };
+      });
+    } else {
+      if (setItem) setItem(key, value);
+      setState({
+        value,
+        isLoaded: true
+      });
+    }
   };
 
   return [state.value, setPersistedState, state.isLoaded];
 };
-
 
 /**
  * @callback getItem
