@@ -24,15 +24,15 @@ import { setupStore } from '@shipt/osmosis';
 
 The `setupStore` function takes in an argument that is just a custom hook. The custom hook will return a single object that represents a slice of state and any functions needed to operate on that state.
 
-`setupStore` returns three variables
+`setupStore` returns one variable with 2 properties: `Context` and `Provider`
 
 ```js
-let [storeContext, wrapperFunction, storeRef] = setupStore(useStateStore);
+let store = setupStore(useStateStore);
 ```
 
-- `storeContext` is a React context variable that gives you access to the state and functions of your store
-- `wrapperFunction` is simply a higher-order component used to provide the store to the app and should be used to wrap the top-level component in the app
-- `storeRef` is an object that gives you access to state variables and functions without causing re-renders when changes occur
+- store : a ref to the store object returned from the supplied custom hook
+- store.Context - a React context variable that gives you access to the state and functions of your store
+- store.Provider - a higher-order component used to provide the store to the app
 
 To connect the state throughout your app you have to import the `StoreProvider` function which is simply a utility for combining several `wrapperFunction`'s into a single higher order component.
 
@@ -75,27 +75,25 @@ const useCounterStore = () => {
   };
 };
 
-let [CounterContext, wrapCounter, counterRef] = setupStore(useCounterStore);
+let CounterStore = setupStore(useCounterStore);
 
-export { CounterContext, wrapCounter };
-
-export default counterRef;
+export default CounterStore;
 ```
 
 ```jsx
 //counter.js
 import React, { useContext } from 'react';
-import { CounterContext } from './counter.store';
+import { CounterStore } from './counter.store';
 
 export default () => {
-  const [counterContext] = useContext(CounterContext);
-  let { count } = counterContext.state;
+  const [counterStore] = useContext(CounterStore.Context);
+  let { count } = counterStore.state;
 
   return (
     <div>
       <p>{count}</p>
-      <button onClick={counterContext.increment}>+</button>
-      <button onClick={counterContext.decrement}>-</button>
+      <button onClick={counterStore.increment}>+</button>
+      <button onClick={counterStore.decrement}>-</button>
     </div>
   );
 };
@@ -104,10 +102,10 @@ export default () => {
 ```jsx
 //index.js Root Component
 import { StoreProvider } from '@shipt/osmosis';
-import { wrapCounter } from './counter.store';
+import { CounterStore } from './counter.store';
 import Counter from './counter';
 
-export default StoreProvider([wrapCounter], Counter);
+export default StoreProvider([CounterStore.Provider], Counter);
 ```
 
 ## State Persistence with usePersistedState
