@@ -105,7 +105,7 @@ import { StoreProvider } from '@shipt/osmosis';
 import { CounterStore } from './counter.store';
 import Counter from './counter';
 
-export default StoreProvider(CounterStore.Provider, Counter);
+export default StoreProvider([CounterStore.Provider], Counter);
 ```
 
 ## State Persistence with usePersistedState
