@@ -30,9 +30,9 @@ The `setupStore` function takes in an argument that is just a custom hook. The c
 let store = setupStore(useStateStore);
 ```
 
-- `store.Context` is a React context variable that gives you access to the state and functions of your store
-- `store.Provider` is simply a higher-order component used to provide the store to the app and should be used to wrap the top-level component in the app
-- `store` is an object that gives you access to state variables and functions without causing re-renders when changes occur
+- store : a ref to the store object returned from the supplied custom hook
+- store.Context - a React context variable that gives you access to the state and functions of your store
+- store.Provider - a higher-order component used to provide the store to the app
 
 To connect the state throughout your app you have to import the `StoreProvider` function which is simply a utility for combining several `wrapperFunction`'s into a single higher order component.
 
