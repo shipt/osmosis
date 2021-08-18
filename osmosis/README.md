@@ -86,14 +86,14 @@ import React, { useContext } from 'react';
 import { CounterStore } from './counter.store';
 
 export default () => {
-  const [counterContext] = useContext(CounterStore.Context);
-  let { count } = counterContext.state;
+  const [counterStore] = useContext(CounterStore.Context);
+  let { count } = counterStore.state;
 
   return (
     <div>
       <p>{count}</p>
-      <button onClick={counterContext.increment}>+</button>
-      <button onClick={counterContext.decrement}>-</button>
+      <button onClick={counterStore.increment}>+</button>
+      <button onClick={counterStore.decrement}>-</button>
     </div>
   );
 };
