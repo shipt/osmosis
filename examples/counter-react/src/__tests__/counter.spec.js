@@ -1,10 +1,10 @@
 import React from 'react';
 import Counter from '../counter';
-import { CounterContext } from '../store';
+import { CounterStore } from '../store';
 import { render, fireEvent } from '@testing-library/react';
 
 describe('Counter', () => {
-  const CounterStore = {
+  const counterStore = {
     state: {
       count: 0
     },
@@ -12,9 +12,9 @@ describe('Counter', () => {
     decrementCount: jest.fn()
   };
   let ContextComponent = () => (
-    <CounterContext.Provider value={[CounterStore]}>
+    <CounterStore.Context.Provider value={[counterStore]}>
       <Counter />
-    </CounterContext.Provider>
+    </CounterStore.Context.Provider>
   );
   it('renders default', async () => {
     let wrapper = await render(<ContextComponent />);
@@ -23,11 +23,11 @@ describe('Counter', () => {
   it('tests increment button', async () => {
     let wrapper = await render(<ContextComponent />);
     fireEvent.click(wrapper.getByTestId('increment'));
-    expect(CounterStore.incrementCount).toHaveBeenCalled();
+    expect(counterStore.incrementCount).toHaveBeenCalled();
   });
   it('tests decrement button', async () => {
     let wrapper = await render(<ContextComponent />);
     fireEvent.click(wrapper.getByTestId('decrement'));
-    expect(CounterStore.decrementCount).toHaveBeenCalled();
+    expect(counterStore.decrementCount).toHaveBeenCalled();
   });
 });

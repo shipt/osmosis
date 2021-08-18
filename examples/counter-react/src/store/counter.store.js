@@ -9,8 +9,10 @@ const useCounterContainer = () => {
 
   const decrementCount = () => setCount(count - 1);
 
-  const incrementPersistedCount = () => setPersistedCount(persistedCount + 1);
+  // showing supporting functional state updates
+  const incrementPersistedCount = () => setPersistedCount(currentCount => currentCount + 1);
 
+  // showing supporting non-functional state updates
   const decrementPersistedCount = () => setPersistedCount(persistedCount - 1);
 
   return {
@@ -25,6 +27,6 @@ const useCounterContainer = () => {
   };
 };
 
-let [CounterContext, CounterWrapper, counterRef] = setupStore(useCounterContainer);
+let CounterStore = setupStore(useCounterContainer);
 
-export { CounterContext, CounterWrapper, counterRef };
+export default CounterStore ;

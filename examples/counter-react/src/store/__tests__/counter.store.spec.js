@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
-import { CounterContext, CounterWrapper} from '../counter.store';
+import CounterStore  from '../counter.store';
 import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
 describe('CounterStore', () => {
   let store;
   const renderStore = () => {
-    let Prep = CounterWrapper(() => {
-      store = useContext(CounterContext)[0];
+    let Prep = CounterStore.Provider(() => {
+      store = useContext(CounterStore.Context)[0];
       return null;
     });
     render(<Prep />);
