@@ -30,7 +30,7 @@ The `setupStore` function takes in an argument that is just a custom hook. The c
 let store = setupStore(useStateStore);
 ```
 
-- store : a ref to the store object returned from the supplied custom hook
+- store - a ref to the store object returned from the supplied custom hook
 - store.Context - a React context variable that gives you access to the state and functions of your store
 - store.Provider - a higher-order component used to provide the store to the app
 
