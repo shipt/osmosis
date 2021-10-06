@@ -1502,7 +1502,7 @@
   integrity sha512-DetpxZw1fzPD5xUBrIAoplLChO2VB8DlL5Gg+I1IR9b2wPqYIca2WSUxL5g1vLeR4MsQq1NeWriXAVffV+U1Fw==
 
 "@shipt/osmosis@../../osmosis":
-  version "1.2.0"
+  version "1.2.1"
 
 "@sinonjs/commons@^1.7.0":
   version "1.8.2"
