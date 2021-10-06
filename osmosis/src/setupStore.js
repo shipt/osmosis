@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 
-const _defaultConfig = { proxyEnabled: false };
+const _defaultConfig = { proxyEnabled: true };
 
 /**
  * @callback useCustomHook
