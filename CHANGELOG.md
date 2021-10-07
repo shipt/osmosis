@@ -1,5 +1,11 @@
 # Change Log
 
+## v1.2.1
+
+* Updates to use proxy by default for stores
+* Updates peer dependency
+* Fix dependabot alerts
+
 ## v1.2.0
 
 * BREAKING CHANGE - Modified the return format for `setupStore` to be a single object instead of an array of parts
