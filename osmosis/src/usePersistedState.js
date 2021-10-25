@@ -27,7 +27,7 @@ export const usePersistedState = (initValue, key) => {
     if (getItem) persistedValue = await getItem(key);
     setState(state => {
       return {
-        value: persistedValue || state.value,
+        value: persistedValue ?? state.value,
         isLoaded: true
       };
     });
