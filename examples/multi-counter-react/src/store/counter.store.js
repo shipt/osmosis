@@ -1,6 +1,8 @@
 import { useState, useMemo, useContext } from 'react';
 import { setupDynamicStore } from '@shipt/osmosis';
 
+export const counterRef = {};
+
 const updateState =
   (name, isSubtract = false) =>
   oldState => {
@@ -42,6 +44,8 @@ const useCounterContainer = ({ name }) => {
     }),
     [count] // eslint-disable-line
   );
+
+  counterRef[name] = value;
 
   return value;
 };

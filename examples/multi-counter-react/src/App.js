@@ -11,7 +11,6 @@ configureUsePersistedState({
 const counters = ['Counter 1', 'Counter 2', 'Counter 3'];
 
 const App = () => {
-  console.log('re-render app');
   return (
     <GlobalCounterStore.Provider>
       {counters.map(c => (

@@ -1,6 +1,11 @@
 import React, { createContext } from 'react';
 
-const _defaultConfig = { proxyEnabled: true };
+/**
+ *
+ * @typedef Provider
+ * @type {Function}
+ * @returns {JSX.Element}
+ */
 
 /**
  * @callback useCustomHook
@@ -9,63 +14,27 @@ const _defaultConfig = { proxyEnabled: true };
  */
 
 /**
- *  @typedef SetupStoreConfig
- *  @type {Object}
- *  @property {boolean} proxyEnabled - Determines if the store setup should use proxies internally for the store ref, only if proxies are supported
- */
-
-/**
  *  @typedef Store
  *  @type {Object}
  *  @property {Object} Context - The React Context for the store
- *  @property {Object} Provider - The higher order component provider for the store
+ *  @property {Provider} Provider - The Context.Provider wrapper for the store
  */
 
 /**
  * @param {useCustomHook} useCustomHook
- * @param {SetupStoreConfig} [config = { proxyEnabled: false }] - The setup store config
  * @returns {Store}
  */
-const setupDynamicStore = (useCustomHook, config = _defaultConfig) => {
+const setupDynamicStore = useCustomHook => {
   const StoreContext = createContext({});
-  // If proxy is not supported
-  let storeRef = { state: {} };
 
-  // If proxy is supported
-  let storeProxy;
-  let storeProxyObject = { ref: { state: {} } };
-
-  const ProviderWrapper = ({ children, ...props }) => {
-    let store = useCustomHook(props);
-    if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
-    if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
-
-    if (storeProxy) {
-      storeProxyObject.ref = store;
-    } else {
-      for (let key in store) {
-        storeRef[key] = store[key];
-      }
-    }
-
+  function Provider({ children, ...props }) {
+    const store = useCustomHook(props);
     return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
-  };
-
-  if (!!Proxy && config.proxyEnabled) {
-    storeProxy = new Proxy(storeProxyObject, {
-      get: (target, property) => {
-        if (property === 'Context') return StoreContext;
-        if (property === 'Provider') return ProviderWrapper;
-        return target.ref[property];
-      },
-      set: (target, property, value) => (target.ref[property] = value)
-    });
-  } else {
-    storeRef.Context = StoreContext;
-    storeRef.Provider = ProviderWrapper;
   }
-
-  return storeProxy || storeRef;
+  return {
+    Context: StoreContext,
+    Provider
+  };
 };
 
 export { setupDynamicStore };

@@ -1,1 +1,1 @@
-export { CounterStore, GlobalCounterStore } from './counter.store';
+export { CounterStore, GlobalCounterStore, counterRef } from './counter.store';

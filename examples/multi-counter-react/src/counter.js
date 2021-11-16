@@ -1,21 +1,21 @@
 import React, { useContext } from 'react';
-import { CounterStore } from './store';
+import { CounterStore, counterRef } from './store';
 
 const Counter = ({ name }) => {
   const counterContext = useContext(CounterStore.Context);
-  let { count } = counterContext.state;
-
-  console.log('rerendering ', name);
+  const { count } = counterContext.state;
 
   return (
     <div data-testid="counter-wrap">
       <p>
         {name}: {count}
       </p>
+      {/* example using a function from the counter context */}
       <button data-testid="decrement" onClick={counterContext.decrementCount}>
         -
       </button>
-      <button data-testid="increment" onClick={counterContext.incrementCount}>
+      {/* example invoking a function on an externally available ref */}
+      <button data-testid="increment" onClick={counterRef[name].incrementCount}>
         +
       </button>
     </div>
