@@ -1,5 +1,4 @@
 import React, { createContext } from 'react';
-import PropTypes from 'prop-types';
 
 const _defaultExtractor = (store, _, ref) => {
   for (let key in store) {
@@ -15,12 +14,6 @@ const _defaultConfig = { proxyEnabled: true, storeExtractor: _defaultExtractor }
  */
 
 /**
- * @typedef Wrapper
- * @type {Function}
- * @returns {React.Component}
- */
-
-/**
  * @typedef Provider
  * @type {Function}
  * @returns {React.Component}
@@ -30,8 +23,7 @@ const _defaultConfig = { proxyEnabled: true, storeExtractor: _defaultExtractor }
  *
  * @typedef DynamicStore
  * @type {Object}
- * @property {Provider} Provider
- * @property {Wrapper} Wrapper
+ * @property {Function} Provider
  * @property {React.Context} Context
  */
 
@@ -44,22 +36,14 @@ export const setupDynamicStore = (useCustomHook, config = _defaultConfig) => {
   const proxyRef = {};
   const Context = createContext({});
 
-  const Provider = ({ children, ...props }) => {
-    const store = useCustomHook(props);
-    config.storeExtractor(store, props, proxyRef);
-    return <Context.Provider value={store}>{children}</Context.Provider>;
-  };
-
-  Provider.propTypes = {
-    children: PropTypes.node
-  };
-
-  const Wrapper = WrappedComponent =>
+  const Provider = WrappedComponent =>
     function ComponentWithWrapper(props) {
+      const store = useCustomHook(props);
+      config.storeExtractor(store, props, proxyRef);
       return (
-        <Provider {...props}>
+        <Context.Provider value={store}>
           <WrappedComponent {...props} />
-        </Provider>
+        </Context.Provider>
       );
     };
 
@@ -70,7 +54,6 @@ export const setupDynamicStore = (useCustomHook, config = _defaultConfig) => {
       get: (target, property) => {
         if (property === 'Context') return Context;
         if (property === 'Provider') return Provider;
-        if (property === 'Wrapper') return Wrapper;
         return target[property];
       },
       set: (target, property, value) => (target[property] = value)
@@ -78,7 +61,6 @@ export const setupDynamicStore = (useCustomHook, config = _defaultConfig) => {
 
   proxyRef.Context = Context;
   proxyRef.Provider = Provider;
-  proxyRef.Wrapper = Wrapper;
   return proxyRef;
 };
 
