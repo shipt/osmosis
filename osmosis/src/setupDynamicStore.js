@@ -9,22 +9,35 @@ const _defaultExtractor = (store, _, ref) => {
 const _defaultConfig = { proxyEnabled: true, storeExtractor: _defaultExtractor };
 
 /**
+ * @callback useCustomHook
+ * @param {Object} props
+ * @returns {Object}
+ */
+
+/**
  * @typedef Wrapper
  * @type {Function}
  * @returns {React.Component}
  */
 
 /**
- * @typedef DynamicStore
- * @property {React.Context} Context
- * @property {Component} Provider
- * @property {Function} Wrapper
+ * @typedef Provider
+ * @type {Function}
+ * @returns {React.Component}
  */
 
 /**
  *
- * @param {Function} useCustomHook
- * @param {{ ref: {} }} proxyRef
+ * @typedef DynamicStore
+ * @type {Object}
+ * @property {Provider} Provider
+ * @property {Wrapper} Wrapper
+ * @property {React.Context} Context
+ */
+
+/**
+ *
+ * @param {useCustomHook} useCustomHook
  * @returns {DynamicStore} DynamicStore
  */
 export const setupDynamicStore = (useCustomHook, config = _defaultConfig) => {
