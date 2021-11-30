@@ -1,9 +1,7 @@
 import { useState, useMemo, useContext } from 'react';
 import { setupDynamicStore } from '@shipt/osmosis';
 
-export const counterRef = {};
-
-const updateState =
+const updateName =
   (name, isSubtract = false) =>
   oldState => {
     const newState = { ...oldState };
@@ -12,44 +10,48 @@ const updateState =
     return newState;
   };
 
-const useGlobalCounterContainer = () => {
+/*
+  holds all counter states
+*/
+const GlobalCounterStore = setupDynamicStore(() => {
   const [countState, setCountState] = useState({});
 
   const value = useMemo(
     () => ({
-      state: countState,
-      incrementNameCount: name => setCountState(updateState(name)),
-      decrementNameCount: name => setCountState(updateState(name, true))
+      countState,
+      incrementNameCount: name => setCountState(updateName(name)),
+      decrementNameCount: name => setCountState(updateName(name, true))
     }),
     [countState]
   );
 
   return value;
-};
+});
 
-const GlobalCounterStore = setupDynamicStore(useGlobalCounterContainer);
+/* 
+  subscribes to global counters state, accesses name's slice of the global counter state,
+  then passes state and functions specific to name's slice of global counter state down in it's provider value
+*/
+const CounterStore = setupDynamicStore(
+  ({ name }) => {
+    const { countState, incrementNameCount, decrementNameCount } = useContext(GlobalCounterStore.Context);
 
-const useCounterContainer = ({ name }) => {
-  const { state, incrementNameCount, decrementNameCount } = useContext(GlobalCounterStore.Context);
+    const count = countState[name] ?? 0;
 
-  const count = state[name] ?? 0;
+    const withName = fn => () => fn(name);
 
-  const value = useMemo(
-    () => ({
-      state: {
-        count
-      },
-      incrementCount: () => incrementNameCount(name),
-      decrementCount: () => decrementNameCount(name)
-    }),
-    [count] // eslint-disable-line
-  );
+    const value = useMemo(
+      () => ({
+        count,
+        incrementCount: withName(incrementNameCount),
+        decrementCount: withName(decrementNameCount)
+      }),
+      [count] // eslint-disable-line
+    );
 
-  counterRef[name] = value;
-
-  return value;
-};
-
-const CounterStore = setupDynamicStore(useCounterContainer);
+    return value;
+  },
+  { storeExtractor: (store, { name }, ref) => (ref[name] = store) }
+);
 
 export { CounterStore, GlobalCounterStore };
