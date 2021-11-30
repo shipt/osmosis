@@ -12,12 +12,12 @@ const counters = ['Counter 1', 'Counter 2', 'Counter 3'];
 
 const App = () => {
   return (
-    <GlobalCounterStore.Provider>
+    <>
       {counters.map(c => (
         <Counter key={c} name={c} />
       ))}
-    </GlobalCounterStore.Provider>
+    </>
   );
 };
 
-export default App;
+export default GlobalCounterStore.Provider(App);
