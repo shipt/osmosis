@@ -1,4 +1,5 @@
 import React, { createContext } from 'react';
+import PropTypes from 'prop-types';
 
 const _defaultExtractor = (store, _, ref) => {
   for (let key in store) {
@@ -33,24 +34,34 @@ const _defaultConfig = { proxyEnabled: true, storeExtractor: _defaultExtractor }
  * @returns {DynamicStore} DynamicStore
  */
 export const setupDynamicStore = (useCustomHook, config = _defaultConfig) => {
-  const proxyRef = {};
+  const storeRef = {};
   const Context = createContext({});
+
+  const Wrapper = ({ children, ...props }) => {
+    const store = useCustomHook(props);
+
+    if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
+    if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
+
+    config.storeExtractor(store, props, storeRef);
+    return <Context.Provider value={store}>{children} </Context.Provider>;
+  };
+
+  Wrapper.propTypes = {
+    children: PropTypes.node
+  };
 
   const Provider = WrappedComponent =>
     function ComponentWithWrapper(props) {
-      const store = useCustomHook(props);
-      config.storeExtractor(store, props, proxyRef);
       return (
-        <Context.Provider value={store}>
+        <Wrapper {...props}>
           <WrappedComponent {...props} />
-        </Context.Provider>
+        </Wrapper>
       );
     };
 
-  // eslint-disable-next-line
   if (!!Proxy && config.proxyEnabled)
-    // eslint-disable-next-line
-    return new Proxy(proxyRef, {
+    return new Proxy(storeRef, {
       get: (target, property) => {
         if (property === 'Context') return Context;
         if (property === 'Provider') return Provider;
@@ -59,13 +70,7 @@ export const setupDynamicStore = (useCustomHook, config = _defaultConfig) => {
       set: (target, property, value) => (target[property] = value)
     });
 
-  proxyRef.Context = Context;
-  proxyRef.Provider = Provider;
-  return proxyRef;
+  storeRef.Context = Context;
+  storeRef.Provider = Provider;
+  return storeRef;
 };
-
-/**
- * ref to be used with setupDynamicStore
- * @returns {{ ref: {}}}
- */
-export const createStoreRef = () => ({ ref: {} });
