@@ -1,13 +1,11 @@
 import React, { useContext } from 'react';
 import { CounterStore } from './store';
 
-const CounterInner = ({ name }) => {
+const Counter = CounterStore.Provider(({ name }) => {
   const { decrementCount, count } = useContext(CounterStore.Context);
   // incrementCount exists on the context value, but I wanted to include the line below to demonstrate how
   // the store ref works with nested stores when used with a store extractor
   const { incrementCount } = CounterStore[name];
-
-  console.log('rendering counter - ' + name, { count });
 
   return (
     <div data-testid="counter-wrap">
@@ -24,8 +22,6 @@ const CounterInner = ({ name }) => {
       </button>
     </div>
   );
-};
+});
 
-const CounterWithWrapper = CounterStore.Provider(CounterInner);
-
-export default CounterWithWrapper;
+export default Counter;
