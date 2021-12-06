@@ -35,7 +35,8 @@ const setupStore = (useCustomHook, config = _defaultConfig) => {
   let storeProxy;
   let storeProxyObject = { ref: {} };
 
-  const withStoreContext = WrappedComponent => ({ storeKey, ...props }) => {
+  const withStoreContext = WrappedComponent => props => {
+    let storeKey = props.storeKey;
     let store = useCustomHook(props);
     if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
     if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
