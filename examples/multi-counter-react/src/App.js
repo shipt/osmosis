@@ -8,7 +8,7 @@ const App = () => {
   return (
     <>
       {counters.map(c => (
-        <Counter key={c} name={c} />
+        <Counter key={c} name={c} storeKey={c} />
       ))}
     </>
   );

@@ -4,6 +4,7 @@ const _defaultConfig = { proxyEnabled: true };
 
 /**
  * @callback useCustomHook
+ * @param {Object} props
  * @returns {Object}
  */
 
@@ -28,22 +29,28 @@ const _defaultConfig = { proxyEnabled: true };
 const setupStore = (useCustomHook, config = _defaultConfig) => {
   const StoreContext = createContext();
   // If proxy is not supported
-  let storeRef = { state: {} };
+  let storeRef = {};
 
   // If proxy is supported
   let storeProxy;
-  let storeProxyObject = { ref: { state: {} } };
+  let storeProxyObject = { ref: {} };
 
-  const withStoreContext = WrappedComponent => props => {
-    let store = useCustomHook();
+  const withStoreContext = WrappedComponent => ({ storeKey, ...props }) => {
+    let store = useCustomHook(props);
     if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
     if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
 
     if (storeProxy) {
-      storeProxyObject.ref = store;
+      if (storeKey) {
+        storeProxyObject.ref[storeKey] = store;
+      } else storeProxyObject.ref = store;
     } else {
-      for (let key in store) {
-        storeRef[key] = store[key];
+      if (storeKey) {
+        storeRef[storeKey] = store;
+      } else {
+        for (let key in store) {
+          storeRef[key] = store[key];
+        }
       }
     }
 
@@ -67,7 +74,6 @@ const setupStore = (useCustomHook, config = _defaultConfig) => {
     storeRef.Context = StoreContext;
     storeRef.Provider = withStoreContext;
   }
-
 
   return storeProxy || storeRef;
 };

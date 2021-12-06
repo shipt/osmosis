@@ -1,5 +1,5 @@
 import { useState, useMemo, useContext } from 'react';
-import { setupDynamicStore } from '@shipt/osmosis';
+import { setupStore } from '@shipt/osmosis';
 
 const updateName =
   (name, isSubtract = false) =>
@@ -13,7 +13,7 @@ const updateName =
 /*
   holds all counter states
 */
-const GlobalCounterStore = setupDynamicStore(() => {
+const GlobalCounterStore = setupStore(() => {
   const [countState, setCountState] = useState({});
 
   const value = useMemo(
@@ -32,26 +32,23 @@ const GlobalCounterStore = setupDynamicStore(() => {
   subscribes to global counters state, accesses name's slice of the global counter state,
   then passes state and functions specific to name's slice of global counter state down in it's provider value
 */
-const CounterStore = setupDynamicStore(
-  ({ name }) => {
-    const { countState, incrementNameCount, decrementNameCount } = useContext(GlobalCounterStore.Context);
+const CounterStore = setupStore(({ name }) => {
+  const [{ countState, incrementNameCount, decrementNameCount }] = useContext(GlobalCounterStore.Context);
 
-    const count = countState[name] ?? 0;
+  const count = countState[name] ?? 0;
 
-    const withName = fn => () => fn(name);
+  const withName = fn => () => fn(name);
 
-    const value = useMemo(
-      () => ({
-        count,
-        incrementCount: withName(incrementNameCount),
-        decrementCount: withName(decrementNameCount)
-      }),
-      [count] // eslint-disable-line
-    );
+  const value = useMemo(
+    () => ({
+      count,
+      incrementCount: withName(incrementNameCount),
+      decrementCount: withName(decrementNameCount)
+    }),
+    [count] // eslint-disable-line
+  );
 
-    return value;
-  },
-  { storeExtractor: (store, { name }, ref) => (ref[name] = store) }
-);
+  return value;
+});
 
 export { CounterStore, GlobalCounterStore };
