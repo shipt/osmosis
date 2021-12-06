@@ -6,7 +6,7 @@ import { act } from 'react-dom/test-utils';
 describe('CounterStore', () => {
   let store;
   const Dummy = () => {
-    store = useContext(CounterStore.Context);
+    store = useContext(CounterStore.Context)[0];
     return null;
   };
   const renderStore = () => {
