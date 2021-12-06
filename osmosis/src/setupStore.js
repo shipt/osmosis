@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 
-const _defaultConfig = { proxyEnabled: true };
+const _defaultConfig = { proxyEnabled: true, storeValueAsArray: true };
 
 /**
  * @callback useCustomHook
@@ -11,6 +11,7 @@ const _defaultConfig = { proxyEnabled: true };
  *  @typedef SetupStoreConfig
  *  @type {Object}
  *  @property {boolean} proxyEnabled - Determines if the store setup should use proxies internally for the store ref, only if proxies are supported
+ *  @property {boolean} storeValueAsArray - Determines if the store setup should set the provider's value as an array with the store as the first element or just as the store
  */
 
 /**
@@ -22,7 +23,7 @@ const _defaultConfig = { proxyEnabled: true };
 
 /**
  * @param {useCustomHook} useCustomHook
- * @param {SetupStoreConfig} [config = { proxyEnabled: false }] - The setup store config
+ * @param {SetupStoreConfig} [config = { proxyEnabled: false, storeValueAsArray: true }] - The setup store config
  * @returns {Store}
  */
 const setupStore = (useCustomHook, config = _defaultConfig) => {
@@ -47,8 +48,10 @@ const setupStore = (useCustomHook, config = _defaultConfig) => {
       }
     }
 
+    const value = config.storeValueAsArray ? [store] : store;
+
     return (
-      <StoreContext.Provider value={[store]}>
+      <StoreContext.Provider value={value}>
         <WrappedComponent {...props} />
       </StoreContext.Provider>
     );
@@ -67,7 +70,6 @@ const setupStore = (useCustomHook, config = _defaultConfig) => {
     storeRef.Context = StoreContext;
     storeRef.Provider = withStoreContext;
   }
-
 
   return storeProxy || storeRef;
 };
