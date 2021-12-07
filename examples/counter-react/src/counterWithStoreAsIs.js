@@ -7,7 +7,7 @@ const Counter = () => {
 
   return (
     <div data-testid="counter-wrap">
-      <p>Count with store as is: {count}</p>
+      <p>Count with store as-is: {count}</p>
       <button data-testid="decrement" onClick={counterContext.decrementCount}>
         -
       </button>

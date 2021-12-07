@@ -48,7 +48,7 @@ const setupStore = (useCustomHook, config = _defaultConfig) => {
       }
     }
 
-    const value = config.storeValueAsIs ? [store] : store;
+    const value = config.storeValueAsIs ? store : [store];
 
     return (
       <StoreContext.Provider value={value}>
