@@ -6,7 +6,7 @@
 
 ## Store Props
 
-There are some use cases where you might want your store to be influenced by arguments at runtime. Imagine a CounterStore that holds multiple counters and increments or decrements based on a value based on an element in an array or parallel instances of a store with slightly different functionality. You could nest the store logic in a single store's value, which can quickly get hairy and annoying to maintain, have the increment/decrement functions take an argument (simple with small stores, but increasingly complicated with larger stores), or you can pass props to your wrapped component (example below) to modify your custom hook's behavior.
+There are some use cases where you might want your store to be influenced by arguments at runtime. Imagine a CounterStore that holds multiple counters and increments or decrements based on a value or parallel instances of a store with slightly different functionality. You could nest the store logic in a single store's value, which can quickly get hairy and annoying to maintain, have the increment/decrement functions take an argument (simple with small stores, but increasingly complicated with larger stores), or you can pass props to your wrapped component (example below) to modify your custom hook's behavior.
 
 If you have a large store that holds frequently updated data, you could wrap consumers in a local Osmosis store that can be used to derive a simpler state to keep component and store logic more closely held.
 
