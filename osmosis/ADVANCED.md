@@ -14,7 +14,7 @@ If you have a large store that holds frequently updated data, you could wrap con
 
 By having parallel stores, there is a threat of the storeRef values being constantly overwritten by all of your various stores. This can be solved by simply passing a `storeKey` to your wrapped component to nest the hook's result under your `storeKey`.
 
-This will preserve all the parallel store's values under the provided `storeKey`, allowing you to reference and act on those stores as necessary.
+This will preserve all the parallel store's values under the provided `storeKey`, allowing you to reference and act on those stores as necessary (`CounterStore[storeKey1]` gets you the store associated with `storeKey1`).
 
 ## Example
 
@@ -72,7 +72,6 @@ export default () => {
 ```jsx
 //index.js Root Component
 import React from 'react
-import { StoreProvider } from '@shipt/osmosis';
 import { CounterStore } from './counter.store';
 import Counter from './counter';
 
