@@ -81,7 +81,7 @@ import Counter from './counter';
 
 const intervals = [1, 2, 3];
 
-const Counters = CounterStore.Provider(() => {
+const Counters = () => {
   return (
     <>
       {intervals.map(interval => (
@@ -91,5 +91,5 @@ const Counters = CounterStore.Provider(() => {
   );
 });
 
-export default Counters;
+export default CounterStore.Provider(Counters);
 ```
