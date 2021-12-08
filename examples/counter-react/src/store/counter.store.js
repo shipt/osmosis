@@ -27,7 +27,7 @@ const useCounterContainer = () => {
   };
 };
 
-let CounterStore = setupStore(useCounterContainer);
-let CounterStoreAsIs = setupStore(useCounterContainer, { storeValueAsIs: true });
+let CounterStore = setupStore(useCounterContainer, { returnStoreAsArray: true });
+let CounterStoreAsIs = setupStore(useCounterContainer);
 
 export { CounterStore, CounterStoreAsIs };
