@@ -7,6 +7,7 @@ Osmosis utilizes React context and allows you to create your own custom hooks to
 ## Links
 
 - [Documentation](https://github.com/shipt/osmosis/tree/master/osmosis)
+- [Advanced Usage](https://github.com/shipt/osmosis/tree/master/osmosis/ADVANCED.md)
 - [Example Project](https://github.com/shipt/osmosis/tree/master/examples/counter-react)
 
 ## License
