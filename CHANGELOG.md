@@ -1,5 +1,9 @@
 # Change Log
 
+## v1.3.0
+* feature - support multiple dynamic stores and forwarding props into the store custom hooks
+* chore - fix persisted falsy value causing default value to come back
+
 ## v1.2.1
 
 * Updates to use proxy by default for stores
