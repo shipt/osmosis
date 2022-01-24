@@ -7,7 +7,7 @@ describe('CounterStore', () => {
   let store;
   const renderStore = () => {
     let Prep = CounterStore.Provider(() => {
-      store = useContext(CounterStore.Context)[0];
+      store = useContext(CounterStore.Context);
       return null;
     });
     render(<Prep />);
