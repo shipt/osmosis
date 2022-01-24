@@ -23,6 +23,6 @@ const useCounterWithReducerStore = () => {
   };
 };
 
-let CounterWithReducerStore = setupStore(useCounterWithReducerStore, { legacyReturnStoreAsArray: true });
+let CounterWithReducerStore = setupStore(useCounterWithReducerStore);
 
 export default CounterWithReducerStore;

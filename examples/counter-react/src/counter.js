@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { CounterStore } from './store';
 
 const Counter = () => {
-  const [counterContext] = useContext(CounterStore.Context);
+  const counterContext = useContext(CounterStore.Context);
   let { count } = counterContext.state;
 
   return (

@@ -86,7 +86,7 @@ import React, { useContext } from 'react';
 import { CounterStore } from './counter.store';
 
 export default () => {
-  const [counterStore] = useContext(CounterStore.Context);
+  const counterStore = useContext(CounterStore.Context);
   let { count } = counterStore.state;
 
   return (
@@ -120,7 +120,7 @@ To configure the persistence layer for `usePersistedState`, simply perform somet
 import { configureUsePersistedState } from '@shipt/osmosis';
 
 async function getItem(key) {
-  let value = // perform async actions to return the value for the key provided 
+  let value = // perform async actions to return the value for the key provided
   return value;
 }
 

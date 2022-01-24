@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { CounterStore } from './store';
 
 const PersistedCounter = () => {
-  const [counterContext] = useContext(CounterStore.Context);
+  const counterContext = useContext(CounterStore.Context);
   let { persistedCount } = counterContext.state;
 
   return (

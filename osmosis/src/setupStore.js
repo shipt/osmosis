@@ -12,7 +12,6 @@ const _defaultConfig = { proxyEnabled: true, legacyReturnStoreAsArray: false };
  *  @typedef SetupStoreConfig
  *  @type {Object}
  *  @property {boolean} proxyEnabled - Determines if the store setup should use proxies internally for the store ref, only if proxies are supported
- *  @property {boolean} legacyReturnStoreAsArray - Determines if the store setup should set the provider's value as an array with the store as the first element or just as the store
  */
 
 /**
@@ -24,7 +23,7 @@ const _defaultConfig = { proxyEnabled: true, legacyReturnStoreAsArray: false };
 
 /**
  * @param {useCustomHook} useCustomHook
- * @param {SetupStoreConfig} [config = { proxyEnabled: false, legacyReturnStoreAsArray: false }] - The setup store config
+ * @param {SetupStoreConfig} [config = { proxyEnabled: false }] - The setup store config
  * @returns {Store}
  */
 const setupStore = (useCustomHook, config = _defaultConfig) => {
