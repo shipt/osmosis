@@ -1,5 +1,5 @@
 import { StoreProvider, configureUsePersistedState } from '@shipt/osmosis';
-import { CounterStore, CounterWithReducerStore } from './store';
+import { CounterStore, CounterWithReducerStore, CountersStore } from './store';
 
 import Counter from './counter';
 import PersistedCounter from './persistedCounter.js';
@@ -14,6 +14,7 @@ configureUsePersistedState({
 const counters = ['A', 'B', 'C'];
 
 const App = () => {
+  console.log('Loading app');
   return (
     <>
       <Counter />
@@ -26,4 +27,4 @@ const App = () => {
   );
 };
 
-export default StoreProvider([CounterStore.Provider, CounterWithReducerStore.Provider], App);
+export default StoreProvider([CounterStore.Provider, CounterWithReducerStore.Provider, CountersStore.Provider], App);

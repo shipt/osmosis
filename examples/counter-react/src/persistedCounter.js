@@ -5,6 +5,8 @@ const PersistedCounter = () => {
   const counterContext = useContext(CounterStore.Context);
   let { persistedCount } = counterContext.state;
 
+  console.log('Persisted counter');
+
   return (
     <div data-testid="counter-wrap">
       <p>Persisted Count: {persistedCount}</p>

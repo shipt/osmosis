@@ -8,6 +8,8 @@ const PersistedCounter = () => {
     counterState: { count }
   } = counterContext;
 
+  console.log('Dispatch counter');
+
   return (
     <div data-testid="counter-wrap">
       <p>Dispatch Count: {count}</p>

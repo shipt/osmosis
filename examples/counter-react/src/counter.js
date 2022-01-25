@@ -5,6 +5,8 @@ const Counter = () => {
   const counterContext = useContext(CounterStore.Context);
   let { count } = counterContext.state;
 
+  console.log('Counter');
+
   return (
     <div data-testid="counter-wrap">
       <p>Count: {count}</p>
