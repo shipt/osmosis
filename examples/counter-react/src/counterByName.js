@@ -2,12 +2,10 @@ import React, { useContext } from 'react';
 import { NestedCounterStore } from './store';
 
 const Counter = ({ name }) => {
-  const [
-    {
-      state: { count },
-      decrement
-    }
-  ] = useContext(NestedCounterStore.Context);
+  const {
+    state: { count },
+    decrement
+  } = useContext(NestedCounterStore.Context);
 
   // this isn't necessary, but this demonstrates how a store ref would be used if a storeKey is provided
   const increment = () => NestedCounterStore[name].increment();
