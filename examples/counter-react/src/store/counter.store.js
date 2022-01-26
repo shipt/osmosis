@@ -28,5 +28,6 @@ const useCounterContainer = () => {
 };
 
 let CounterStore = setupStore(useCounterContainer);
+let DynamicCounterStore = setupStore(useCounterContainer);
 
-export default CounterStore ;
+export { CounterStore, DynamicCounterStore };

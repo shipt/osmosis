@@ -1,12 +1,12 @@
 import React, { useContext } from 'react';
-import { CounterStore } from './store';
+import { DynamicCounterStore } from './store';
 
 const Counter = ({ name }) => {
-  const counterStore = useContext(CounterStore.Context);
+  const counterStore = useContext(DynamicCounterStore.Context);
   let { count } = counterStore.state;
 
   // this isn't necessary, but this demonstrates how a store ref would be used if a storeKey is provided
-  const incrementCount = () => CounterStore[name].incrementCount();
+  const incrementCount = () => DynamicCounterStore[name].incrementCount();
 
   return (
     <div data-testid="counter-wrap">
@@ -23,4 +23,4 @@ const Counter = ({ name }) => {
   );
 };
 
-export default CounterStore.Provider(Counter);
+export default DynamicCounterStore.Provider(Counter);
