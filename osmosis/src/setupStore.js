@@ -1,6 +1,10 @@
 import React, { createContext } from 'react';
 
-const _defaultConfig = { proxyEnabled: true };
+let _defaultConfig = { proxyEnabled: true, legacyReturnStoreAsArray: false };
+
+export const configureSetupStore = config => {
+  _defaultConfig = { ..._defaultConfig, ...config };
+};
 
 /**
  * @callback useCustomHook
@@ -26,7 +30,8 @@ const _defaultConfig = { proxyEnabled: true };
  * @param {SetupStoreConfig} [config = { proxyEnabled: false }] - The setup store config
  * @returns {Store}
  */
-const setupStore = (useCustomHook, config = _defaultConfig) => {
+const setupStore = (useCustomHook, config = {}) => {
+  config = { ..._defaultConfig, ...config };
   const StoreContext = createContext();
   // If proxy is not supported
   let storeRef = {};
@@ -55,11 +60,44 @@ const setupStore = (useCustomHook, config = _defaultConfig) => {
       }
     }
 
+    const value = config.legacyReturnStoreAsArray ? [store] : store;
+
     return (
-      <StoreContext.Provider value={[store]}>
+      <StoreContext.Provider value={value}>
         <WrappedComponent {...props} />
       </StoreContext.Provider>
     );
+  };
+
+  const withStoreContext2 = WrappedComponent => props => (
+    <StoreContextWrapper {...props}>
+      <WrappedComponent {...props} />
+    </StoreContextWrapper>
+  );
+
+  const StoreContextWrapper = ({ children, ...props }) => {
+    let storeKey = props.storeKey;
+    let store = useCustomHook(props);
+    if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
+    if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
+
+    if (storeProxy) {
+      if (storeKey) {
+        storeProxyObject.ref[storeKey] = store;
+      } else storeProxyObject.ref = store;
+    } else {
+      if (storeKey) {
+        storeRef[storeKey] = store;
+      } else {
+        for (let key in store) {
+          storeRef[key] = store[key];
+        }
+      }
+    }
+
+    const value = config.legacyReturnStoreAsArray ? [store] : store;
+
+    return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
   };
 
   if (!!Proxy && config.proxyEnabled) {
@@ -67,6 +105,7 @@ const setupStore = (useCustomHook, config = _defaultConfig) => {
       get: (target, property) => {
         if (property === 'Context') return StoreContext;
         if (property === 'Provider') return withStoreContext;
+        if (property === 'Provider2') return withStoreContext2;
         return target.ref[property];
       },
       set: (target, property, value) => (target.ref[property] = value)
