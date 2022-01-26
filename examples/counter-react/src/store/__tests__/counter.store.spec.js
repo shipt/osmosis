@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import CounterStore  from '../counter.store';
+import { CounterStore } from '../counter.store';
 import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 
