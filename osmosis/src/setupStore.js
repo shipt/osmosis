@@ -71,35 +71,37 @@ const setupStore = (useCustomHook, config = {}) => {
   };
 
   // New Store Provider
-  const withStoreContext = WrappedComponent => props => (
-    <StoreContextWrapper {...props}>
-      <WrappedComponent {...props} />
-    </StoreContextWrapper>
-  );
+  const withStoreContext = WrappedComponent => props => {
+    const StoreContextWrapper = ({ children, ...props }) => {
+      let storeKey = props.storeKey;
+      let store = useCustomHook(props);
+      if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
+      if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
 
-  const StoreContextWrapper = ({ children, ...props }) => {
-    let storeKey = props.storeKey;
-    let store = useCustomHook(props);
-    if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
-    if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
-
-    if (storeProxy) {
-      if (storeKey) {
-        storeProxyObject.ref[storeKey] = store;
-      } else storeProxyObject.ref = store;
-    } else {
-      if (storeKey) {
-        storeRef[storeKey] = store;
+      if (storeProxy) {
+        if (storeKey) {
+          storeProxyObject.ref[storeKey] = store;
+        } else storeProxyObject.ref = store;
       } else {
-        for (let key in store) {
-          storeRef[key] = store[key];
+        if (storeKey) {
+          storeRef[storeKey] = store;
+        } else {
+          for (let key in store) {
+            storeRef[key] = store[key];
+          }
         }
       }
-    }
 
-    const value = config.legacyReturnStoreAsArray ? [store] : store;
+      const value = config.legacyReturnStoreAsArray ? [store] : store;
 
-    return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
+      return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
+    };
+
+    return (
+      <StoreContextWrapper {...props}>
+        <WrappedComponent {...props} />
+      </StoreContextWrapper>
+    );
   };
 
   if (!!Proxy && config.proxyEnabled) {
