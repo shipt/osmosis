@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { createContext } from 'react';
 
 let _defaultConfig = { proxyEnabled: true, legacyReturnStoreAsArray: false };
@@ -71,7 +72,7 @@ const setupStore = (useCustomHook, config = {}) => {
   };
 
   // New Store Provider
-  const withStoreContext = WrappedComponent => props => {
+  const withStoreContext = WrappedComponent => {
     const StoreContextWrapper = ({ children, ...props }) => {
       let storeKey = props.storeKey;
       let store = useCustomHook(props);
@@ -97,11 +98,12 @@ const setupStore = (useCustomHook, config = {}) => {
       return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
     };
 
-    return (
+    const Wrapper = props => (
       <StoreContextWrapper {...props}>
         <WrappedComponent {...props} />
       </StoreContextWrapper>
     );
+    return Wrapper;
   };
 
   if (!!Proxy && config.proxyEnabled) {
