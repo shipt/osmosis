@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { CounterWithReducerStore } from './store';
 
 const PersistedCounter = () => {
-  const [counterContext] = useContext(CounterWithReducerStore.Context);
-  let { dispatch, counterState: { count }} = counterContext;
+  const counterStore = useContext(CounterWithReducerStore.Context);
+  let { dispatch, counterState: { count }} = counterStore;
 
   return (
     <div data-testid="counter-wrap">

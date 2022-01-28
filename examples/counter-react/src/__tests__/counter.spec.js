@@ -12,7 +12,7 @@ describe('Counter', () => {
     decrementCount: jest.fn()
   };
   let ContextComponent = () => (
-    <CounterStore.Context.Provider value={[counterStore]}>
+    <CounterStore.Context.Provider value={counterStore}>
       <Counter />
     </CounterStore.Context.Provider>
   );

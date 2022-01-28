@@ -2,16 +2,16 @@ import React, { useContext } from 'react';
 import { CounterStore } from './store';
 
 const Counter = () => {
-  const [counterContext] = useContext(CounterStore.Context);
-  let { count } = counterContext.state;
+  const counterStore = useContext(CounterStore.Context);
+  let { count } = counterStore.state;
 
   return (
     <div data-testid="counter-wrap">
       <p>Count: {count}</p>
-      <button data-testid="decrement" onClick={counterContext.decrementCount}>
+      <button data-testid="decrement" onClick={counterStore.decrementCount}>
         -
       </button>
-      <button data-testid="increment" onClick={counterContext.incrementCount}>
+      <button data-testid="increment" onClick={counterStore.incrementCount}>
         +
       </button>
     </div>
