@@ -1,5 +1,9 @@
 # Change Log
 
+## v2.0.0
+* BREAKING CHANGE - When subscribing to a store via the `useContext` hook, the returning store object is now a single object which represents the store. Previously this was an array, but the array was arbitrary.
+* chore/bug - Reworked store providers to correctly target rerenders only to subscribing children components. Previously there was a nuance where updates could occur even without a context subscription.
+
 ## v1.3.0
 * feature - support multiple dynamic stores and forwarding props into the store custom hooks
 * chore - fix persisted falsy value causing default value to come back
