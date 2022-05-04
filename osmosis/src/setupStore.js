@@ -27,9 +27,10 @@ export const configureSetupStore = config => {
  */
 
 /**
- * @param {useCustomHook} useCustomHook
+ * @template T
+ * @param {function(object) : T} useCustomHook
  * @param {SetupStoreConfig} [config = { proxyEnabled: false }] - The setup store config
- * @returns {Store}
+ * @returns {T & Store}
  */
 const setupStore = (useCustomHook, config = {}) => {
   config = { ..._defaultConfig, ...config };
