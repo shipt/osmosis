@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { createContext, useContext } from 'react';
+import React, { createContext } from 'react';
 
 let _defaultConfig = { proxyEnabled: true, legacyReturnStoreAsArray: false };
 
