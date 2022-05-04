@@ -20,16 +20,17 @@ export const configureSetupStore = config => {
  */
 
 /**
+ *  @template T
  *  @typedef Store
- *  @type {Object}
- *  @property {Object} Context - The React Context for the store
+ *  @property {React.Context<T>} Context - The React Context for the store
  *  @property {Object} Provider - The higher order component provider for the store
  */
 
 /**
- * @param {useCustomHook} useCustomHook
+ * @template T
+ * @param {function(object) : T} useCustomHook
  * @param {SetupStoreConfig} [config = { proxyEnabled: false }] - The setup store config
- * @returns {Store}
+ * @returns {T & Store<T>}
  */
 const setupStore = (useCustomHook, config = {}) => {
   config = { ..._defaultConfig, ...config };
