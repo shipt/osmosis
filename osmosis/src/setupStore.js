@@ -55,6 +55,7 @@ const setupStore = (useCustomHook, config = {}) => {
     let store = useCustomHook(props);
     if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
     if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
+    if (!!store.useStore) throw new Error("'Provider' property is protected and cannot exist on a store object");
 
     if (storeProxy) {
       if (storeKey) {
