@@ -118,7 +118,7 @@ const setupStore = (useCustomHook, config = {}) => {
   const useStore = () => useContext(StoreContext);
 
   if (!!Proxy && config.proxyEnabled) {
-    storeProxyObject['useStore'] = useStore;
+    storeProxyObject.ref['useStore'] = useStore;
     storeProxy = new Proxy(storeProxyObject, {
       get: (target, property) => {
         if (property === 'Context') return StoreContext;
