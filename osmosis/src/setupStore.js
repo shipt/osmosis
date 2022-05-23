@@ -55,7 +55,7 @@ const setupStore = (useCustomHook, config = {}) => {
     let store = useCustomHook(props);
     if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
     if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
-    if (!!store.useStore) throw new Error("'Provider' property is protected and cannot exist on a store object");
+    if (!!store.useStore) throw new Error("'useStore' property is protected and cannot exist on a store object");
 
     if (storeProxy) {
       if (storeKey) {
@@ -87,6 +87,7 @@ const setupStore = (useCustomHook, config = {}) => {
       let store = useCustomHook(props);
       if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
       if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
+      if (!!store.useStore) throw new Error("'useStore' property is protected and cannot exist on a store object");
 
       if (storeProxy) {
         if (storeKey) {
@@ -118,12 +119,12 @@ const setupStore = (useCustomHook, config = {}) => {
   const useStore = () => useContext(StoreContext);
 
   if (!!Proxy && config.proxyEnabled) {
-    storeProxyObject.ref['useStore'] = useStore;
     storeProxy = new Proxy(storeProxyObject, {
       get: (target, property) => {
         if (property === 'Context') return StoreContext;
         if (property === 'Provider') return withStoreContext;
         if (property === 'LegacyProvider') return withLegacyStoreContext;
+        if (property === 'useStore') return target.ref[property] ?? useStore;
         return target.ref[property];
       },
       set: (target, property, value) => (target.ref[property] = value)
