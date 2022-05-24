@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { createContext } from 'react';
+import React, { createContext, useContext } from 'react';
 
 let _defaultConfig = { proxyEnabled: true, legacyReturnStoreAsArray: false };
 
@@ -20,20 +20,29 @@ export const configureSetupStore = config => {
  */
 
 /**
- *  @typedef Store
- *  @type {Object}
- *  @property {Object} Context - The React Context for the store
- *  @property {Object} Provider - The higher order component provider for the store
+ * @template T
+ * @callback useStore
+ * @returns {T}
  */
 
 /**
- * @param {useCustomHook} useCustomHook
+ *  @template T
+ *  @typedef Store
+ *  @property {React.Context<T>} Context - The React Context for the store
+ *  @property {Object} Provider - The higher order component provider for the store
+ *  @property {useStore<T>} useStore - Returns result of useContext(Context)
+ */
+
+/**
+ * @template T
+ * @param {function(object) : T} useCustomHook
  * @param {SetupStoreConfig} [config = { proxyEnabled: false }] - The setup store config
- * @returns {Store}
+ * @returns {T & Store<T>}
  */
 const setupStore = (useCustomHook, config = {}) => {
   config = { ..._defaultConfig, ...config };
   const StoreContext = createContext();
+
   // If proxy is not supported
   let storeRef = {};
 
@@ -41,43 +50,14 @@ const setupStore = (useCustomHook, config = {}) => {
   let storeProxy;
   let storeProxyObject = { ref: {} };
 
-  // Legacy Store Provider
-  const withLegacyStoreContext = WrappedComponent => props => {
-    let storeKey = props.storeKey;
-    let store = useCustomHook(props);
-    if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
-    if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
-
-    if (storeProxy) {
-      if (storeKey) {
-        storeProxyObject.ref[storeKey] = store;
-      } else storeProxyObject.ref = store;
-    } else {
-      if (storeKey) {
-        storeRef[storeKey] = store;
-      } else {
-        for (let key in store) {
-          storeRef[key] = store[key];
-        }
-      }
-    }
-
-    const value = config.legacyReturnStoreAsArray ? [store] : store;
-
-    return (
-      <StoreContext.Provider value={value}>
-        <WrappedComponent {...props} />
-      </StoreContext.Provider>
-    );
-  };
-
-  // New Store Provider
+  // Store Provider
   const withStoreContext = WrappedComponent => {
     const StoreContextWrapper = ({ children, ...props }) => {
       let storeKey = props.storeKey;
       let store = useCustomHook(props);
       if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
       if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
+      if (!!store.useStore) throw new Error("'useStore' property is protected and cannot exist on a store object");
 
       if (storeProxy) {
         if (storeKey) {
@@ -106,12 +86,14 @@ const setupStore = (useCustomHook, config = {}) => {
     return Wrapper;
   };
 
+  const useStore = () => useContext(StoreContext);
+
   if (!!Proxy && config.proxyEnabled) {
     storeProxy = new Proxy(storeProxyObject, {
       get: (target, property) => {
         if (property === 'Context') return StoreContext;
         if (property === 'Provider') return withStoreContext;
-        if (property === 'LegacyProvider') return withLegacyStoreContext;
+        if (property === 'useStore') return target.ref[property] ?? useStore;
         return target.ref[property];
       },
       set: (target, property, value) => (target.ref[property] = value)
@@ -119,7 +101,7 @@ const setupStore = (useCustomHook, config = {}) => {
   } else {
     storeRef.Context = StoreContext;
     storeRef.Provider = withStoreContext;
-    storeRef.LegacyProvider = withLegacyStoreContext;
+    storeRef.useStore = useStore;
   }
 
   return storeProxy || storeRef;
