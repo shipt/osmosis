@@ -2,6 +2,7 @@
 
 ## v2.0.2
 * Updated for better intellisence using templates
+* Added `useStore` to be attached to objects returned from `setupStore`, which wraps and abstracts the need to explicitly call `useContext(StoreContext)` when subscribing to a store. This also helps with mocking store objects when unit testing components subscribed to a store.
 
 ## v2.0.1
 * Minor dependency updates
