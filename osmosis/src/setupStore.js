@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { createContext } from 'react';
+import React, { createContext, useContext } from 'react';
 
 let _defaultConfig = { proxyEnabled: true, legacyReturnStoreAsArray: false };
 
@@ -20,10 +20,17 @@ export const configureSetupStore = config => {
  */
 
 /**
+ * @template T
+ * @callback useStore
+ * @returns {T}
+ */
+
+/**
  *  @template T
  *  @typedef Store
  *  @property {React.Context<T>} Context - The React Context for the store
  *  @property {Object} Provider - The higher order component provider for the store
+ *  @property {useStore<T>} useStore - Returns result of useContext(Context)
  */
 
 /**
@@ -50,6 +57,7 @@ const setupStore = (useCustomHook, config = {}) => {
       let store = useCustomHook(props);
       if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
       if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
+      if (!!store.useStore) throw new Error("'useStore' property is protected and cannot exist on a store object");
 
       if (storeProxy) {
         if (storeKey) {
@@ -78,11 +86,14 @@ const setupStore = (useCustomHook, config = {}) => {
     return Wrapper;
   };
 
+  const useStore = () => useContext(StoreContext);
+
   if (!!Proxy && config.proxyEnabled) {
     storeProxy = new Proxy(storeProxyObject, {
       get: (target, property) => {
         if (property === 'Context') return StoreContext;
         if (property === 'Provider') return withStoreContext;
+        if (property === 'useStore') return target.ref[property] ?? useStore;
         return target.ref[property];
       },
       set: (target, property, value) => (target.ref[property] = value)
@@ -90,6 +101,7 @@ const setupStore = (useCustomHook, config = {}) => {
   } else {
     storeRef.Context = StoreContext;
     storeRef.Provider = withStoreContext;
+    storeRef.useStore = useStore;
   }
 
   return storeProxy || storeRef;
