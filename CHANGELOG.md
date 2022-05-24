@@ -1,5 +1,8 @@
 # Change Log
 
+## v2.0.2
+* Updated for better intellisence using templates
+
 ## v2.0.1
 * Minor dependency updates
 

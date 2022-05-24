@@ -42,6 +42,7 @@ export const configureSetupStore = config => {
 const setupStore = (useCustomHook, config = {}) => {
   config = { ..._defaultConfig, ...config };
   const StoreContext = createContext();
+
   // If proxy is not supported
   let storeRef = {};
 
@@ -49,38 +50,7 @@ const setupStore = (useCustomHook, config = {}) => {
   let storeProxy;
   let storeProxyObject = { ref: {} };
 
-  // Legacy Store Provider
-  const withLegacyStoreContext = WrappedComponent => props => {
-    let storeKey = props.storeKey;
-    let store = useCustomHook(props);
-    if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
-    if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
-    if (!!store.useStore) throw new Error("'useStore' property is protected and cannot exist on a store object");
-
-    if (storeProxy) {
-      if (storeKey) {
-        storeProxyObject.ref[storeKey] = store;
-      } else storeProxyObject.ref = store;
-    } else {
-      if (storeKey) {
-        storeRef[storeKey] = store;
-      } else {
-        for (let key in store) {
-          storeRef[key] = store[key];
-        }
-      }
-    }
-
-    const value = config.legacyReturnStoreAsArray ? [store] : store;
-
-    return (
-      <StoreContext.Provider value={value}>
-        <WrappedComponent {...props} />
-      </StoreContext.Provider>
-    );
-  };
-
-  // New Store Provider
+  // Store Provider
   const withStoreContext = WrappedComponent => {
     const StoreContextWrapper = ({ children, ...props }) => {
       let storeKey = props.storeKey;
@@ -123,7 +93,6 @@ const setupStore = (useCustomHook, config = {}) => {
       get: (target, property) => {
         if (property === 'Context') return StoreContext;
         if (property === 'Provider') return withStoreContext;
-        if (property === 'LegacyProvider') return withLegacyStoreContext;
         if (property === 'useStore') return target.ref[property] ?? useStore;
         return target.ref[property];
       },
@@ -132,7 +101,6 @@ const setupStore = (useCustomHook, config = {}) => {
   } else {
     storeRef.Context = StoreContext;
     storeRef.Provider = withStoreContext;
-    storeRef.LegacyProvider = withLegacyStoreContext;
     storeRef.useStore = useStore;
   }
 
