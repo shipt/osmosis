@@ -83,6 +83,8 @@ const setupStore = (useCustomHook, config = {}) => {
         <WrappedComponent {...props} />
       </StoreContextWrapper>
     );
+    const name = useCustomHook.name;
+    Wrapper.displayName = `${name.charAt(0).toUpperCase() + name.slice(1)}Wrapper`;
     return Wrapper;
   };
 
