@@ -2,7 +2,7 @@
 
 ## v2.1.0
 * Updated several dependencies
-* Updated docs to reflect React 18 compatibility
+* Updated package.json to reflect React 18 compatibility as peer dependency
 * Other maintenance changes
 * Updated the wrapper component name to be set from the store hook name
 
