@@ -35,6 +35,6 @@
     "generateTypes": "npx typescript ./src/index.js --declaration --allowJs --emitDeclarationOnly --outDir dist"
   },
   "peerDependencies": {
-    "react": "16.x || 17.x"
+    "react": "16.x || 17.x || 18.x"
   }
 }
