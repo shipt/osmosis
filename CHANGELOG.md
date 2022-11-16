@@ -1,5 +1,11 @@
 # Change Log
 
+## v2.1.0
+* Updated several dependencies
+* Updated package.json to reflect React 18 compatibility as peer dependency
+* Other maintenance changes
+* Updated the wrapper component name to be set from the store hook name
+
 ## v2.0.2
 * Updated for better intellisence using templates
 * Added `useStore` to be attached to objects returned from `setupStore`, which wraps and abstracts the need to explicitly call `useContext(StoreContext)` when subscribing to a store. This also helps with mocking store objects when unit testing components subscribed to a store.

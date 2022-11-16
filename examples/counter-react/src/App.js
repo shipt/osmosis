@@ -3,7 +3,7 @@ import { CounterStore, CounterWithReducerStore } from './store';
 
 import Counter from './counter';
 import PersistedCounter from './persistedCounter.js';
-import DispactCounter from './dispatchCounter.js';
+import DispatchCounter from './dispatchCounter.js';
 import CounterByName from './counterByName.js';
 
 configureUsePersistedState({
@@ -18,7 +18,7 @@ const App = () => {
     <>
       <Counter />
       <PersistedCounter />
-      <DispactCounter />
+      <DispatchCounter />
       {counters.map(name => (
         <CounterByName key={name} storeKey={name} name={name} />
       ))}

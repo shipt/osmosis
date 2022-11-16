@@ -1,6 +1,6 @@
 {
   "name": "@shipt/osmosis",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "A lightweight state management library for React and React Native",
   "keywords": [
     "react",
@@ -35,6 +35,6 @@
     "generateTypes": "npx typescript ./src/index.js --declaration --allowJs --emitDeclarationOnly --outDir dist"
   },
   "peerDependencies": {
-    "react": "16.x || 17.x"
+    "react": "16.x || 17.x || 18.x"
   }
 }
