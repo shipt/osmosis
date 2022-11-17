@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { CounterStore } from '../counter.store';
 import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
@@ -7,7 +7,7 @@ describe('CounterStore', () => {
   let store;
   const renderStore = () => {
     let Prep = CounterStore.Provider(() => {
-      store = useContext(CounterStore.Context);
+      store = CounterStore.useStore();
       return null;
     });
     render(<Prep />);
