@@ -1,17 +1,20 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { CounterStore } from './store';
 
 const PersistedCounter = () => {
-  const counterStore = useContext(CounterStore.Context);
-  let { persistedCount } = counterStore.state;
+  const {
+    state: { persistedCount },
+    decrementPersistedCount,
+    incrementPersistedCount
+  } = CounterStore.useStore();
 
   return (
     <div data-testid="counter-wrap">
       <p>Persisted Count: {persistedCount}</p>
-      <button data-testid="decrement" onClick={counterStore.decrementPersistedCount}>
+      <button data-testid="decrement" onClick={decrementPersistedCount}>
         -
       </button>
-      <button data-testid="increment" onClick={counterStore.incrementPersistedCount}>
+      <button data-testid="increment" onClick={incrementPersistedCount}>
         +
       </button>
     </div>
