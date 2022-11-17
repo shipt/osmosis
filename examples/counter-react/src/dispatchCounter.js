@@ -1,17 +1,19 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { CounterWithReducerStore } from './store';
 
 const PersistedCounter = () => {
-  const counterStore = useContext(CounterWithReducerStore.Context);
-  let { dispatch, counterState: { count }} = counterStore;
+  const {
+    dispatch,
+    counterState: { count }
+  } = CounterWithReducerStore.useStore();
 
   return (
     <div data-testid="counter-wrap">
       <p>Dispatch Count: {count}</p>
-      <button data-testid="decrement" onClick={() => dispatch({type: 'decrement'})}>
+      <button data-testid="decrement" onClick={() => dispatch({ type: 'decrement' })}>
         -
       </button>
-      <button data-testid="increment" onClick={() => dispatch({type: 'increment'})}>
+      <button data-testid="increment" onClick={() => dispatch({ type: 'increment' })}>
         +
       </button>
     </div>

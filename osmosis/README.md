@@ -82,18 +82,21 @@ export default CounterStore;
 
 ```jsx
 //counter.js
-import React, { useContext } from 'react';
+import React from 'react';
 import { CounterStore } from './counter.store';
 
 export default () => {
-  const counterStore = useContext(CounterStore.Context);
-  let { count } = counterStore.state;
+  const {
+    state: { count },
+    increment,
+    decrement
+  } = CounterStore.useStore();
 
   return (
     <div>
       <p>{count}</p>
-      <button onClick={counterStore.increment}>+</button>
-      <button onClick={counterStore.decrement}>-</button>
+      <button onClick={increment}>+</button>
+      <button onClick={decrement}>-</button>
     </div>
   );
 };
@@ -120,7 +123,7 @@ To configure the persistence layer for `usePersistedState`, simply perform somet
 import { configureUsePersistedState } from '@shipt/osmosis';
 
 async function getItem(key) {
-  let value = // perform async actions to return the value for the key provided 
+  let value = // perform async actions to return the value for the key provided
   return value;
 }
 

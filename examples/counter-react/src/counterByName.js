@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { DynamicCounterStore } from './store';
 
 const Counter = ({ name }) => {
-  const counterStore = useContext(DynamicCounterStore.Context);
-  let { count } = counterStore.state;
+  const {
+    state: { count },
+    decrementCount
+  } = DynamicCounterStore.useStore();
 
   // this isn't necessary, but this demonstrates how a store ref would be used if a storeKey is provided
   const incrementCount = () => DynamicCounterStore[name].incrementCount();
@@ -13,7 +15,7 @@ const Counter = ({ name }) => {
       <p>
         Counter with key {name}: {count}
       </p>
-      <button data-testid="decrement" onClick={counterStore.decrementCount}>
+      <button data-testid="decrement" onClick={decrementCount}>
         -
       </button>
       <button data-testid="increment" onClick={incrementCount}>
