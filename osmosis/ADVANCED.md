@@ -56,18 +56,21 @@ export default CounterStore;
 
 ```jsx
 //counter.js
-import React, { useContext } from 'react';
+import React from 'react';
 import { CounterStore } from './counter.store';
 
 export default () => {
-  const [counterStore] = useContext(CounterStore.Context);
-  let { count } = counterStore.state;
+  const {
+    state: { count, interval },
+    increment,
+    decrement
+  } = CounterStore.useStore();
 
   return (
     <div>
       <p>{count}</p>
-      <button onClick={counterStore.increment}>+{interval}</button>
-      <button onClick={counterStore.decrement}>-{interval}</button>
+      <button onClick={increment}>+{interval}</button>
+      <button onClick={decrement}>-{interval}</button>
     </div>
   );
 };
@@ -75,7 +78,7 @@ export default () => {
 
 ```jsx
 //index.js Root Component
-import React from 'react
+import React from 'react'
 import { CounterStore } from './counter.store';
 import Counter from './counter';
 
