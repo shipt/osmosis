@@ -8,7 +8,7 @@ let setItem;
  * @param {T} initValue
  * @param {string} key
  * @param {Object} [transformers]
- * @returns {[T, function(T | function(T) : T), boolean]}
+ * @returns {[T, function(T | function(T) : T) : void, boolean]}
  */
 export const usePersistedState = (initValue, key, transformers) => {
   if (!key) console.error('usePersistedState: Storage key is required');
