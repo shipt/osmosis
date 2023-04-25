@@ -7,7 +7,7 @@ let setItem;
  * @template T
  * @param {T} initValue
  * @param {string} key
- * @param {Object} [transformers]
+ * @param {{ getItem: function(T) : any, setItem: function(T) : any}} [transformers]
  * @returns {[T, function(T | function(T) : T) : void, boolean]}
  */
 export const usePersistedState = (initValue, key, transformers) => {
