@@ -82,18 +82,21 @@ export default CounterStore;
 
 ```jsx
 //counter.js
-import React, { useContext } from 'react';
+import React from 'react';
 import { CounterStore } from './counter.store';
 
 export default () => {
-  const counterStore = useContext(CounterStore.Context);
-  let { count } = counterStore.state;
+  const {
+    state: { count },
+    increment,
+    decrement
+  } = CounterStore.useStore();
 
   return (
     <div>
       <p>{count}</p>
-      <button onClick={counterStore.increment}>+</button>
-      <button onClick={counterStore.decrement}>-</button>
+      <button onClick={increment}>+</button>
+      <button onClick={decrement}>-</button>
     </div>
   );
 };
@@ -120,7 +123,7 @@ To configure the persistence layer for `usePersistedState`, simply perform somet
 import { configureUsePersistedState } from '@shipt/osmosis';
 
 async function getItem(key) {
-  let value = // perform async actions to return the value for the key provided 
+  let value = // perform async actions to return the value for the key provided
   return value;
 }
 
@@ -154,3 +157,16 @@ And the return params are:
 - **setStateValue**: the function to update the value in state. This is almost identical to the function returned from `useState`. The only difference is that in addition to setting the current value in state, it also asynchronously calls the configured `setItem` function to allow the user to store the latest state value in the persistence layer desired, using the `persistenceKey` supplied.
 
 - **isHydrated**: a boolean value determining if the persisted value has been loaded into state. Since reading and writing values to the persistence layer are done async, it is often required to delay performing certain actions after the persisted state has been rehydrated into state during the current app session, such as refreshing a user's persisted but expired auth token.
+
+### Custom Transformers
+
+When saving certain data types that are not serializable, it may be necessary to tie into the getter/setter implementation of `usePersistedState` to transform the data type into something that can be serialized for persistence. `usePersistedState` takes a third optional parameter, which is an object containing two functions: `getItem` and `setItem`. These functions will be called as part of the persistence and hydration logic and will be passed the corresponding value that needs transformation.
+
+In the example below, a Map type needs to be persisted and therefore needs to be transformed to and from a JS object for serialization:
+
+```js
+const [stateValue, setStateValue, isHydrated] = usePersistedState(new Map(), 'mapValue', {
+  setItem: value => Object.fromEntries(value),        //called when the state value is being persisted. value is the Map
+  getItem: value => new Map(Object.entries(value))    //called with the state value is being hydrated from the persistence layer. value is the JS Object
+});
+```

@@ -1,5 +1,10 @@
 # Change Log
 
+## v2.1.1
+* Updated several dependencies
+* Added custom transformer option for state persistence with the usePersistedState hook
+* Add better type info for usePersistedState
+
 ## v2.1.0
 * Updated several dependencies
 * Updated package.json to reflect React 18 compatibility as peer dependency

@@ -4,11 +4,13 @@ let getItem;
 let setItem;
 
 /**
- * @param {Object} initValue
+ * @template T
+ * @param {T} initValue
  * @param {string} key
- * @returns {Object[]}
+ * @param {{ getItem: function(T) : any, setItem: function(T) : any}} [transformers]
+ * @returns {[T, function(T | function(T) : T) : void, boolean]}
  */
-export const usePersistedState = (initValue, key) => {
+export const usePersistedState = (initValue, key, transformers) => {
   if (!key) console.error('usePersistedState: Storage key is required');
 
   let [state, setState] = useState({ value: initValue, isLoaded: false });
@@ -25,6 +27,7 @@ export const usePersistedState = (initValue, key) => {
   const _loadPersistedState = async () => {
     let persistedValue = null;
     if (getItem) persistedValue = await getItem(key);
+    if (!!transformers?.getItem) persistedValue = transformers.getItem(persistedValue);
     setState(state => {
       return {
         value: persistedValue ?? state.value,
@@ -33,18 +36,24 @@ export const usePersistedState = (initValue, key) => {
     });
   };
 
+  const _persistState = value => {
+    let _persistedValue = value;
+    if (!!transformers?.setItem) _persistedValue = transformers.setItem(_persistedValue);
+    if (setItem) setItem(key, _persistedValue);
+  };
+
   const setPersistedState = value => {
     if (typeof value === 'function') {
       setState(currentValue => {
         const newValue = value(currentValue.value);
-        if (setItem) setItem(key, newValue);
+        _persistState(newValue);
         return {
           value: newValue,
           isLoaded: true
         };
       });
     } else {
-      if (setItem) setItem(key, value);
+      _persistState(value);
       setState({
         value,
         isLoaded: true
