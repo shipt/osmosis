@@ -1,5 +1,10 @@
 # Change Log
 
+## v2.1.2
+* Updated several dependencies
+* Upgrade babel
+* Add sample NextJS project to repo
+
 ## v2.1.1
 * Updated several dependencies
 * Added custom transformer option for state persistence with the usePersistedState hook
