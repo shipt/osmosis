@@ -30,7 +30,7 @@ jobs:
       - <<: *generate_types
       - run:
           name: Install React Example Dependencies
-          command: cd examples/counter-react; yarn
+          command: cd examples/counter-nextjs; yarn
       - run:
           name: Run React Example Test
           command: yarn test
