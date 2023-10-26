@@ -1,6 +1,6 @@
 {
   "name": "@shipt/osmosis",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "A lightweight state management library for React and React Native",
   "keywords": [
     "react",
@@ -17,24 +17,27 @@
   "repository": "https://github.com/shipt/osmosis.git",
   "license": "MIT",
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.10.5",
-    "@babel/preset-env": "^7.10.4",
-    "@babel/preset-react": "^7.10.4",
-    "babel-eslint": "^10.1.0",
+    "@babel/cli": "^7.23.0",
+    "@babel/core": "^7.23.0",
+    "@babel/eslint-parser": "^7.22.15",
+    "@babel/preset-env": "^7.23.0",
+    "@babel/preset-react": "^7.22.0",
     "eslint": "^7.2.0",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-native": "^3.8.1",
-    "prettier": "^2.0.5"
+    "prettier": "^2.0.5",
+    "typescript": "^5.2.2"
   },
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "babel src -d dist",
-    "generateTypes": "npx typescript ./src/index.js --declaration --allowJs --emitDeclarationOnly --outDir dist"
+    "generateTypes": "npx tsc ./src/index.js --declaration --allowJs --emitDeclarationOnly --outDir dist"
   },
   "peerDependencies": {
     "react": "16.x || 17.x || 18.x"
+  },
+  "dependencies": {
   }
 }
