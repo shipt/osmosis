@@ -1,5 +1,9 @@
 # Change Log
 
+## v2.1.3
+* Update license stuff
+* dependency updates
+
 ## v2.1.2
 * Updated several dependencies
 * Upgrade babel
