@@ -3,7 +3,7 @@ version: 2.1
 defaults: &defaults
   working_directory: ~/osmosis
   docker:
-    - image: cimg/node:18.15.0
+    - image: cimg/node:18.17.1
 
 install_dependencies: &install_dependencies
   run:
