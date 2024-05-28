@@ -170,3 +170,14 @@ const [stateValue, setStateValue, isHydrated] = usePersistedState(new Map(), 'ma
   getItem: value => new Map(Object.entries(value))    //called with the state value is being hydrated from the persistence layer. value is the JS Object
 });
 ```
+### External Store Listeners
+In rare cases it may be helpful to subscribe to store changes in service files or other files outside the react component hierarchy. In these cases you can add a store listener which gets called with the store object on any updates.
+```js
+const CounterStore = setupStore(useCounterStore);
+
+const unsubscribe = CounterStore.addListener(store => {
+  console.log(store);
+});
+
+unsubscribe();
+```
