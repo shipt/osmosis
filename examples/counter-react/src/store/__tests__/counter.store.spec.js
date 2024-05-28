@@ -5,6 +5,9 @@ import { act } from 'react-dom/test-utils';
 
 describe('CounterStore', () => {
   let store;
+  let listener = jest.fn();
+  let removeListener;
+
   const renderStore = () => {
     let Prep = CounterStore.Provider(() => {
       store = CounterStore.useStore();
@@ -12,6 +15,14 @@ describe('CounterStore', () => {
     });
     render(<Prep />);
   };
+
+  beforeEach(() => {
+    removeListener = CounterStore.addListener(listener);
+  });
+
+  afterEach(() => {
+    removeListener();
+  });
 
   it('tests increment', () => {
     act(() => {
@@ -21,7 +32,10 @@ describe('CounterStore', () => {
     act(() => {
       store.incrementCount();
     });
+
     expect(store.state.count).toEqual(1);
+    expect(listener).toHaveBeenCalledTimes(2);
+    expect(listener).toHaveBeenLastCalledWith(store);
   });
 
   it('tests decrement', () => {
@@ -33,5 +47,7 @@ describe('CounterStore', () => {
       store.decrementCount();
     });
     expect(store.state.count).toEqual(-1);
+    expect(listener).toHaveBeenCalledTimes(2);
+    expect(listener).toHaveBeenLastCalledWith(store);
   });
 });
