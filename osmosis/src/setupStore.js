@@ -101,6 +101,8 @@ const setupStore = (useCustomHook, config = {}) => {
     return () => (_listeners = _listeners.filter(f => f !== fn));
   };
 
+  const removeAllListeners = () => _listeners = [];
+
   if (!!Proxy && config.proxyEnabled) {
     storeProxy = new Proxy(storeProxyObject, {
       get: (target, property) => {
@@ -108,6 +110,7 @@ const setupStore = (useCustomHook, config = {}) => {
         if (property === 'Provider') return withStoreContext;
         if (property === 'useStore') return target.ref[property] ?? useStore;
         if (property === 'addListener') return addListener;
+        if (property === 'removeAllListeners') return removeAllListeners;
         return target.ref[property];
       },
       set: (target, property, value) => (target.ref[property] = value)
@@ -117,6 +120,7 @@ const setupStore = (useCustomHook, config = {}) => {
     storeRef.Provider = withStoreContext;
     storeRef.useStore = useStore;
     storeRef.addListener = addListener;
+    storeRef.removeAllListeners = removeAllListeners;
   }
 
   return storeProxy || storeRef;
