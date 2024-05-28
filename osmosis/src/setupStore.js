@@ -50,7 +50,7 @@ const setupStore = (useCustomHook, config = {}) => {
   let storeProxy;
   let storeProxyObject = { ref: {} };
 
-  //listners
+  //listeners
   let _listeners = [];
 
   // Store Provider
