@@ -1,5 +1,9 @@
 # Change Log
 
+## v2.1.4
+* Added ability to add store listeners
+* dependency updates
+
 ## v2.1.3
 * Update license stuff
 * dependency updates

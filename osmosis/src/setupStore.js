@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 
 let _defaultConfig = { proxyEnabled: true, legacyReturnStoreAsArray: false };
 
@@ -50,6 +50,9 @@ const setupStore = (useCustomHook, config = {}) => {
   let storeProxy;
   let storeProxyObject = { ref: {} };
 
+  //listeners
+  let _listeners = [];
+
   // Store Provider
   const withStoreContext = WrappedComponent => {
     const StoreContextWrapper = ({ children, ...props }) => {
@@ -58,6 +61,10 @@ const setupStore = (useCustomHook, config = {}) => {
       if (!!store.Context) throw new Error("'Context' property is protected and cannot exist on a store object");
       if (!!store.Provider) throw new Error("'Provider' property is protected and cannot exist on a store object");
       if (!!store.useStore) throw new Error("'useStore' property is protected and cannot exist on a store object");
+
+      useEffect(() => {
+        _listeners.forEach(fn => fn(store));
+      }, [store]);
 
       if (storeProxy) {
         if (storeKey) {
@@ -89,12 +96,21 @@ const setupStore = (useCustomHook, config = {}) => {
 
   const useStore = () => useContext(StoreContext);
 
+  const addListener = fn => {
+    _listeners.push(fn);
+    return () => (_listeners = _listeners.filter(f => f !== fn));
+  };
+
+  const removeAllListeners = () => _listeners = [];
+
   if (!!Proxy && config.proxyEnabled) {
     storeProxy = new Proxy(storeProxyObject, {
       get: (target, property) => {
         if (property === 'Context') return StoreContext;
         if (property === 'Provider') return withStoreContext;
         if (property === 'useStore') return target.ref[property] ?? useStore;
+        if (property === 'addListener') return addListener;
+        if (property === 'removeAllListeners') return removeAllListeners;
         return target.ref[property];
       },
       set: (target, property, value) => (target.ref[property] = value)
@@ -103,6 +119,8 @@ const setupStore = (useCustomHook, config = {}) => {
     storeRef.Context = StoreContext;
     storeRef.Provider = withStoreContext;
     storeRef.useStore = useStore;
+    storeRef.addListener = addListener;
+    storeRef.removeAllListeners = removeAllListeners;
   }
 
   return storeProxy || storeRef;
