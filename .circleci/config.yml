@@ -38,23 +38,6 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - <<: *install_dependencies
-      - <<: *build_osmosis
-      - <<: *generate_types
-      - run:
-          command: |
-            cd osmosis
-            npm config set registry https://npm.pkg.github.com
-            npm config set //npm.pkg.github.com/:_authToken=$GITHUB_PUBLISH_TOKEN
-            npm publish
-          name: Publish package to Github NPM Registry
-      - run:
-          command: |
-            cd osmosis
-            npm config set registry https://registry.npmjs.org
-            npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-            npm publish --access public
-          name: Publish package to Public NPM Registry
       - run:
           name: Create Git Version Tag
           command: "cd osmosis; PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags"
