@@ -52,7 +52,7 @@ jobs:
           command: |
             cd osmosis
             npm config set registry https://registry.npmjs.org
-            npm config set //registry.npmjs.org/:_authToken=$NPM__TOKEN
+            npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
             npm publish --access public
           name: Publish package to Public NPM Registry
       - run:
