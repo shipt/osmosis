@@ -53,7 +53,7 @@ jobs:
             cd osmosis
             npm config set registry https://registry.npmjs.org
             npm config set //registry.npmjs.org/:_authToken=$NPM__TOKEN
-            npm publish
+            npm publish --access public
           name: Publish package to Public NPM Registry
       - run:
           name: Create Git Version Tag
