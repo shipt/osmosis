@@ -2,7 +2,10 @@
   "name": "",
   "private": true,
   "version": "0.1.0",
-  "repository": "https://github.com/shipt/osmosis.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shipt/osmosis.git"
+  },
   "scripts": {
     "test": "cd examples/counter-nextjs && yarn test"
   }

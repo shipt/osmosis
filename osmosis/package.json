@@ -14,7 +14,10 @@
   "types": "dist/index.d.ts",
   "homepage": "https://github.com/shipt/osmosis",
   "bugs": "https://github.com/shipt/osmosis/issues",
-  "repository": "https://github.com/shipt/osmosis.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shipt/osmosis.git"
+  },
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.23.0",
