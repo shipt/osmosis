@@ -1,5 +1,9 @@
 # Change Log
 
+## v2.1.8
+* dependency updates
+* updated store provider to just accept stores and not need specific provider functions supplied
+
 ## v2.1.7
 * dependency updates
    
