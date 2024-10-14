@@ -59,13 +59,12 @@ export default CounterStore;
 import React from 'react';
 import CounterStore from './counter.store';
 
-const Counter = ({ interval }) => {
+const Counter = () => {
   const {
-    state: { count },
+    state: { count, interval },
+    increment,
     decrement
   } = CounterStore.useStore();
-
-  const increment = () => CounterStore[interval].increment();
 
   return (
     <div>
