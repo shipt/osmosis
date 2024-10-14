@@ -29,7 +29,7 @@ import { setupStore } from '@shipt/osmosis';
 
 const useCounterStore = props => {
   const [count, setCount] = useState(0);
-  const interval = props.interval ?? 0;
+  const interval = props.interval ?? 1;
 
   const increment = () => {
     setCount(count + interval);
@@ -57,14 +57,15 @@ export default CounterStore;
 ```jsx
 //counter.js
 import React from 'react';
-import { CounterStore } from './counter.store';
+import CounterStore from './counter.store';
 
-export default () => {
+const Counter = ({ interval }) => {
   const {
-    state: { count, interval },
-    increment,
+    state: { count },
     decrement
   } = CounterStore.useStore();
+
+  const increment = () => CounterStore[interval].increment();
 
   return (
     <div>
@@ -74,17 +75,20 @@ export default () => {
     </div>
   );
 };
+
+export default CounterStore.Provider(Counter);
 ```
 
 ```jsx
 //index.js Root Component
-import React from 'react'
-import { CounterStore } from './counter.store';
+import React from 'react';
+import { StoreProvider } from '@shipt/osmosis';
+import CounterStore from './counter.store';
 import Counter from './counter';
 
 const intervals = [1, 2, 3];
 
-const Counters = () => {
+const App = () => {
   return (
     <>
       {intervals.map(interval => (
@@ -92,7 +96,7 @@ const Counters = () => {
       ))}
     </>
   );
-});
+};
 
-export default CounterStore.Provider(Counters);
+export default StoreProvider([CounterStore.Provider], App);
 ```
