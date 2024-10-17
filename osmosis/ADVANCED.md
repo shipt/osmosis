@@ -97,5 +97,5 @@ const App = () => {
   );
 };
 
-export default StoreProvider([CounterStore.Provider], App);
+export default StoreProvider([CounterStore], App);
 ```
