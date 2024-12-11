@@ -83,7 +83,7 @@ export default CounterStore;
 ```jsx
 //counter.js
 import React from 'react';
-import { CounterStore } from './counter.store';
+import CounterStore from './counter.store';
 
 export default () => {
   const {
@@ -105,7 +105,7 @@ export default () => {
 ```jsx
 //index.js Root Component
 import { StoreProvider } from '@shipt/osmosis';
-import { CounterStore } from './counter.store';
+import CounterStore from './counter.store';
 import Counter from './counter';
 
 export default StoreProvider([CounterStore.Provider], Counter);
