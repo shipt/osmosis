@@ -14,6 +14,20 @@ export const configureSetupStore = config => {
  */
 
 /**
+ * @template T
+ * @callback addListener
+ * @param {addListenerCallback<T>} callback
+ * @returns {function() : void}
+ */
+
+/**
+ * @template T
+ * @callback addListenerCallback
+ * @param {T} store
+ * @returns {void}
+ */
+
+/**
  *  @typedef SetupStoreConfig
  *  @type {Object}
  *  @property {boolean} proxyEnabled - Determines if the store setup should use proxies internally for the store ref, only if proxies are supported
@@ -31,6 +45,8 @@ export const configureSetupStore = config => {
  *  @property {React.Context<T>} Context - The React Context for the store
  *  @property {Object} Provider - The higher order component provider for the store
  *  @property {useStore<T>} useStore - Returns result of useContext(Context)
+ *  @property {addListener<T>} addListener
+ *  @property {function() : void} removeAllListeners
  */
 
 /**
@@ -101,7 +117,7 @@ const setupStore = (useCustomHook, config = {}) => {
     return () => (_listeners = _listeners.filter(f => f !== fn));
   };
 
-  const removeAllListeners = () => _listeners = [];
+  const removeAllListeners = () => (_listeners = []);
 
   if (!!Proxy && config.proxyEnabled) {
     storeProxy = new Proxy(storeProxyObject, {
