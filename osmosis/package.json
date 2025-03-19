@@ -1,6 +1,6 @@
 {
   "name": "@shipt/osmosis",
-  "version": "2.1.9",
+  "version": "2.1.10",
   "description": "A lightweight state management library for React and React Native",
   "keywords": [
     "react",
