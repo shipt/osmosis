@@ -32,5 +32,21 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolutions": {
+    "@tootallnate/once": "2.0.1",
+    "brace-expansion": "2.1.2",
+    "follow-redirects": "1.16.0",
+    "form-data": "4.0.6",
+    "http-proxy-middleware": "2.0.10",
+    "js-yaml": "4.2.0",
+    "postcss": "8.5.10",
+    "qs": "6.15.2",
+    "serialize-javascript": "7.0.5",
+    "shell-quote": "1.8.4",
+    "uuid": "11.1.1",
+    "webpack-dev-server": "5.2.6",
+    "websocket-driver": "0.7.5",
+    "ws": "8.21.0"
   }
 }

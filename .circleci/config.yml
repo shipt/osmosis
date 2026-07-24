@@ -3,7 +3,7 @@ version: 2.1
 defaults: &defaults
   working_directory: ~/osmosis
   docker:
-    - image: cimg/node:18.17.1
+    - image: cimg/node:20.19
 
 install_dependencies: &install_dependencies
   run:
@@ -25,9 +25,9 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - <<: *install_dependencies
-      - <<: *build_osmosis
-      - <<: *generate_types
+      - *install_dependencies
+      - *build_osmosis
+      - *generate_types
       - run:
           name: Install React Example Dependencies
           command: cd examples/counter-nextjs; yarn
@@ -40,7 +40,11 @@ jobs:
       - checkout
       - run:
           name: Create Git Version Tag
-          command: "cd osmosis; PACKAGE_VERSION=$(cat package.json | grep \\\"version\\\" | head -1 | awk -F: '{ print $2 }' | sed 's/[\",]//g' | tr -d '[[:space:]]') && git tag v$PACKAGE_VERSION && git push --tags"
+          command: |
+            cd osmosis
+            PACKAGE_VERSION=$(node -p "require('./package.json').version")
+            git tag v$PACKAGE_VERSION
+            git push --tags
 
 workflows:
   version: 2.1
