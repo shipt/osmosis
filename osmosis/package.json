@@ -45,7 +45,7 @@
   "resolutions": {
     "@babel/core": "7.29.7",
     "@babel/plugin-transform-modules-systemjs": "7.29.7",
-    "brace-expansion": "1.1.16",
+    "minimatch": "10.2.5",
     "js-yaml": "3.15.0"
   }
 }
