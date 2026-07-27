@@ -41,6 +41,5 @@
   "peerDependencies": {
     "react": "16.x || 17.x || 18.x"
   },
-  "dependencies": {
-  }
+  "packageManager": "yarn@1.22.22"
 }
