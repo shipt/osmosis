@@ -27,7 +27,7 @@
     "@babel/preset-react": "^7.22.0",
     "eslint": "^7.2.0",
     "eslint-plugin-react": "^7.20.0",
-    "eslint-plugin-react-native": "^3.8.1",
+    "eslint-plugin-react-native": "^5.0.0",
     "prettier": "^2.0.5",
     "typescript": "^5.2.2"
   },
