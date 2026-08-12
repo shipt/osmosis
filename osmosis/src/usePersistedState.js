@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 let getItem;
 let setItem;
@@ -8,12 +8,14 @@ let setItem;
  * @param {T} initValue
  * @param {string} key
  * @param {{ getItem: function(T) : any, setItem: function(T) : any}} [transformers]
- * @returns {[T, function(T | function(T) : T) : void, boolean]}
+ * @returns {[T, function(T | function(T) : T) : void, boolean, Promise<T>]}
  */
 export const usePersistedState = (initValue, key, transformers) => {
   if (!key) console.error('usePersistedState: Storage key is required');
 
-  let [state, setState] = useState({ value: initValue, isLoaded: false });
+  const [state, setState] = useState({ value: initValue, isLoaded: false });
+  const resolvePromiseRef = useRef();
+  const isLoadedPromise = useRef(new Promise(resolve => (resolvePromiseRef.current = resolve))).current;
 
   useEffect(() => {
     if (!getItem)
@@ -23,6 +25,13 @@ export const usePersistedState = (initValue, key, transformers) => {
 
     _loadPersistedState();
   }, []);
+
+  useEffect(() => {
+    if (state.isLoaded && resolvePromiseRef.current) {
+      resolvePromiseRef.current(state.value);
+      resolvePromiseRef.current = null;
+    }
+  }, [state]);
 
   const _loadPersistedState = async () => {
     let persistedValue = null;
@@ -61,7 +70,7 @@ export const usePersistedState = (initValue, key, transformers) => {
     }
   };
 
-  return [state.value, setPersistedState, state.isLoaded];
+  return [state.value, setPersistedState, state.isLoaded, isLoadedPromise];
 };
 
 /**
