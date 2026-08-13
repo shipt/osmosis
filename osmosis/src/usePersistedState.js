@@ -31,7 +31,7 @@ export const usePersistedState = (initValue, key, transformers) => {
       resolvePromiseRef.current(state.value);
       resolvePromiseRef.current = null;
     }
-  }, [state]);
+  }, [state.value, state.isLoaded]);
 
   const _loadPersistedState = async () => {
     let persistedValue = null;
