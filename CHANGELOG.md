@@ -1,5 +1,8 @@
 # Change Log
 
+## v2.1.11
+* dependency updates
+
 ## v2.1.10
 * dependency updates
 * type definition fixes
